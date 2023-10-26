@@ -8,7 +8,7 @@ public enum Fraction
     Defender
 }
 
-public class GameManager : MonoBehaviour
+public class Spawner : MonoBehaviour
 {
     [SerializeField] GameObject attackerPrefab;
     [SerializeField] GameObject defenderPrefab;

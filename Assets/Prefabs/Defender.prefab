@@ -1,6 +1,6 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
---- !u!1001 &7960551433591809018
+--- !u!1001 &7300639695883723377
 PrefabInstance:
   m_ObjectHideFlags: 0
   serializedVersion: 2
@@ -11,7 +11,7 @@ PrefabInstance:
     - target: {fileID: 3830534318098108880, guid: 841687251266de14793ac32455bf58ad,
         type: 3}
       propertyPath: m_Name
-      value: Attacker Variant
+      value: Defender
       objectReference: {fileID: 0}
     - target: {fileID: 8713999355065206776, guid: 841687251266de14793ac32455bf58ad,
         type: 3}
@@ -26,7 +26,7 @@ PrefabInstance:
     - target: {fileID: 8713999355065206776, guid: 841687251266de14793ac32455bf58ad,
         type: 3}
       propertyPath: m_LocalPosition.z
-      value: 0.577
+      value: -4.64
       objectReference: {fileID: 0}
     - target: {fileID: 8713999355065206776, guid: 841687251266de14793ac32455bf58ad,
         type: 3}
@@ -67,9 +67,41 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Materials.Array.data[0]
       value: 
-      objectReference: {fileID: 2100000, guid: 90999dce9905369429d691dc448bff21, type: 2}
-    m_RemovedComponents: []
+      objectReference: {fileID: 2100000, guid: 250d3f729634cb44d963209661a6a343, type: 2}
+    m_RemovedComponents:
+    - {fileID: 5167853993428269939, guid: 841687251266de14793ac32455bf58ad, type: 3}
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
-    m_AddedComponents: []
+    m_AddedComponents:
+    - targetCorrespondingSourceObject: {fileID: 3830534318098108880, guid: 841687251266de14793ac32455bf58ad,
+        type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 165969607054562444}
   m_SourcePrefab: {fileID: 100100000, guid: 841687251266de14793ac32455bf58ad, type: 3}
+--- !u!1 &5798911966524060577 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 3830534318098108880, guid: 841687251266de14793ac32455bf58ad,
+    type: 3}
+  m_PrefabInstance: {fileID: 7300639695883723377}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &165969607054562444
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5798911966524060577}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 63cf0b526969996498f5bae4603cce93, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  speed: 1
+  currentState: 0
+  inactiveColor: {r: 0.44705886, g: 0.45098042, b: 0.4431373, a: 1}
+  activeColor: {r: 0.6745098, g: 0.21568629, b: 0.21960786, a: 1}
+  spawnTime: 0.5
+  reactivateTime: 4
+  normalSpeed: 0
+  defenseRadius: 5
+  returnSpeed: 0
