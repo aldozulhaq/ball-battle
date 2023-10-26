@@ -5,13 +5,21 @@ using UnityEngine;
 
 public class Defender : Soldier
 {
-    private GameObject ballCarrier;
     [SerializeField] private float defenseRadius;
 
     private Vector3 startPos;
 
     // Speeds
     [SerializeField] float returnSpeed;
+
+    private void OnEnable()
+    {
+        GameplayEvents.OnAttackerStartCarryingE += OnCarrierChange;
+    }
+    private void OnDisable()
+    {
+        GameplayEvents.OnAttackerStartCarryingE -= OnCarrierChange;
+    }
 
     private void Start()
     {
@@ -43,10 +51,13 @@ public class Defender : Soldier
     private IEnumerator StandingBy()
     {
         currentState = SoldierState.Standby;
-        ballCarrier = GetCarrier();
+        SetCarrier();
 
         while (currentState == SoldierState.Standby)
         {
+            if (!ballCarrier)
+                yield return null;
+
             if (Vector3.Distance(this.transform.position, ballCarrier.transform.position) <= defenseRadius)
             {
                 SetCurrentState(SoldierState.Chasing);
@@ -62,7 +73,7 @@ public class Defender : Soldier
     {
         while (currentState == SoldierState.Chasing)
         {
-            Move(ballCarrier);
+            Move(ballCarrier.transform.position, normalSpeed);
 
             yield return new WaitForEndOfFrame();
         }
@@ -71,7 +82,7 @@ public class Defender : Soldier
     private void OnCarrierChange()
     {
         StopAllCoroutines();
-        ballCarrier = GetCarrier();
+        SetCarrier();
         StartCoroutine(ChaseCarrier());
     }
 
@@ -96,17 +107,6 @@ public class Defender : Soldier
     {
         base.Reactivate();
         StartCoroutine(StandingBy());
-    }
-
-    private GameObject GetCarrier()
-    {
-        Attacker[] attackers = FindObjectsOfType<Attacker>();
-        foreach (Attacker dribbler in attackers)
-        {
-            if(dribbler.GetCurrentState() == SoldierState.Dribbling)
-                return dribbler.gameObject;
-        }
-        return null;
     }
 
     private void OnDrawGizmosSelected()

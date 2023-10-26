@@ -101,11 +101,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 05346e9026ac2fb4997fc486fa6d9b12, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  speed: 0
   currentState: 0
   inactiveColor: {r: 0.46274513, g: 0.46274513, b: 0.454902, a: 1}
   activeColor: {r: 0.16862746, g: 0.21960786, b: 0.47058827, a: 1}
-  spawnTime: 0
-  reactivateTime: 0
-  normalSpeed: 0
-  carryingSpeed: 0
+  spawnTime: 0.5
+  reactivateTime: 2.5
+  normalSpeed: 1.5
+  goalGate: {fileID: 0}
+  carryingSpeed: 0.75

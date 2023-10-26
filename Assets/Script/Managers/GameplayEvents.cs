@@ -20,4 +20,9 @@ public static class GameplayEvents
     {
         OnHitCarrierE?.Invoke();
     }
+
+    public static void OnAttackerStartCarrying()
+    {
+        OnAttackerStartCarryingE?.Invoke();
+    }
 }

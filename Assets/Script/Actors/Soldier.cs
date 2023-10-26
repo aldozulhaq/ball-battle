@@ -13,9 +13,9 @@ public enum SoldierState
 
 public class Soldier : MonoBehaviour
 {
-    [SerializeField] protected float speed;
     [SerializeField] protected SoldierState currentState;
     protected Fraction soldierFraction;
+    protected GameObject ballCarrier;
 
     [SerializeField] Color inactiveColor;
     [SerializeField] Color activeColor;
@@ -27,10 +27,10 @@ public class Soldier : MonoBehaviour
     // Speeds
     [SerializeField] protected float normalSpeed;
 
-    protected virtual void Move(GameObject target)
+    protected virtual void Move(Vector3 target, float speed)
     {
-        transform.position = Vector3.MoveTowards(transform.position, target.transform.position, speed * Time.deltaTime);
-        transform.LookAt(target.transform);
+        transform.position = Vector3.MoveTowards(transform.position, target, speed * Time.deltaTime);
+        transform.LookAt(target);
     }
 
     protected virtual IEnumerator OnSpawning()
@@ -48,6 +48,23 @@ public class Soldier : MonoBehaviour
         yield return new WaitForSeconds(reactivateTime);
 
         Reactivate();
+
+    }
+
+    protected virtual void SetCarrier()
+    {
+        Attacker[] attackers = FindObjectsOfType<Attacker>();
+        foreach (Attacker attacker in attackers)
+        {
+            if (attacker.GetCurrentState() == SoldierState.Dribbling)
+            {
+                ballCarrier = attacker.gameObject;
+                return;
+            }
+        }
+
+        // no carrier
+        ballCarrier = null;
 
     }
 
