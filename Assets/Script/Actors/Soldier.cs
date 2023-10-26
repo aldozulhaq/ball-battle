@@ -43,6 +43,8 @@ public class Soldier : MonoBehaviour
     protected virtual IEnumerator OnInactive()
     {
         currentState = SoldierState.Inactive;
+        // TODO: Change color 
+        ChangeColor(inactiveColor);
         yield return new WaitForSeconds(reactivateTime);
 
         Reactivate();
@@ -52,7 +54,7 @@ public class Soldier : MonoBehaviour
     protected virtual void Reactivate()
     {
         // TODO : Change color here
-
+        ChangeColor(activeColor);
     }
 
     public SoldierState GetCurrentState()
@@ -63,5 +65,10 @@ public class Soldier : MonoBehaviour
     protected void SetCurrentState(SoldierState state)
     {
         currentState = state;
+    }
+
+    private void ChangeColor(Color color)
+    {
+        GetComponent<Renderer>().material.SetColor("_BaseColor", color);
     }
 }

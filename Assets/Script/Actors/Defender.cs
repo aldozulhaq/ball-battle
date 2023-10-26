@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
 
 public class Defender : Soldier
@@ -19,6 +20,18 @@ public class Defender : Soldier
         StartCoroutine(OnSpawning());
     }
 
+    private void OnTriggerEnter(Collider other)
+    {
+        if (currentState != SoldierState.Chasing)
+            return;
+
+        if (other.gameObject != ballCarrier)
+            return;
+        
+        OnHitCarrier();
+        GameplayEvents.OnHitCarrier();
+    }
+
     protected override IEnumerator OnSpawning()
     {
         StartCoroutine(base.OnSpawning());
@@ -30,7 +43,7 @@ public class Defender : Soldier
     private IEnumerator StandingBy()
     {
         currentState = SoldierState.Standby;
-        ballCarrier = GetDribbler();
+        ballCarrier = GetCarrier();
 
         while (currentState == SoldierState.Standby)
         {
@@ -39,13 +52,13 @@ public class Defender : Soldier
                 SetCurrentState(SoldierState.Chasing);
                 
                 StopAllCoroutines();
-                StartCoroutine(ChaseDribbler());
+                StartCoroutine(ChaseCarrier());
             }
             yield return new WaitForEndOfFrame();
         }
     }
 
-    private IEnumerator ChaseDribbler()
+    private IEnumerator ChaseCarrier()
     {
         while (currentState == SoldierState.Chasing)
         {
@@ -55,14 +68,14 @@ public class Defender : Soldier
         }
     }
 
-    private void OnDribblerChange()
+    private void OnCarrierChange()
     {
         StopAllCoroutines();
-        ballCarrier = GetDribbler();
-        StartCoroutine(ChaseDribbler());
+        ballCarrier = GetCarrier();
+        StartCoroutine(ChaseCarrier());
     }
 
-    private void OnHitDribbler()
+    private void OnHitCarrier()
     {
         SetCurrentState(SoldierState.Inactive);
 
@@ -70,14 +83,14 @@ public class Defender : Soldier
         StartCoroutine(OnInactive());
     }
    protected override IEnumerator OnInactive()
-    {
-        // TODO : Return back to spawn pos
-
-        StartCoroutine(base.OnInactive());
+   {
+        StartCoroutine(BackToSpawnPosition(() => 
+            StartCoroutine(base.OnInactive())
+        ));
 
         yield return null;
 
-    }
+   }
  
     protected override void Reactivate()
     {
@@ -85,7 +98,7 @@ public class Defender : Soldier
         StartCoroutine(StandingBy());
     }
 
-    private GameObject GetDribbler()
+    private GameObject GetCarrier()
     {
         Attacker[] attackers = FindObjectsOfType<Attacker>();
         foreach (Attacker dribbler in attackers)
@@ -100,5 +113,17 @@ public class Defender : Soldier
     {
         Gizmos.color = Color.red;
         Gizmos.DrawWireSphere(transform.position, defenseRadius);
+    }
+
+    private IEnumerator BackToSpawnPosition(System.Action _Callback = null)
+    {
+        while (Vector3.Distance(transform.position, startPos) >= 0.01f)
+        {
+            transform.position = Vector3.MoveTowards(transform.position, startPos, returnSpeed * Time.deltaTime);
+
+            yield return new WaitForEndOfFrame();
+        }
+
+        _Callback?.Invoke();
     }
 }

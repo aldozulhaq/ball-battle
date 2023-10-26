@@ -68,6 +68,11 @@ PrefabInstance:
       propertyPath: m_Materials.Array.data[0]
       value: 
       objectReference: {fileID: 2100000, guid: 250d3f729634cb44d963209661a6a343, type: 2}
+    - target: {fileID: 9123801220864333434, guid: 841687251266de14793ac32455bf58ad,
+        type: 3}
+      propertyPath: m_IsTrigger
+      value: 1
+      objectReference: {fileID: 0}
     m_RemovedComponents:
     - {fileID: 5167853993428269939, guid: 841687251266de14793ac32455bf58ad, type: 3}
     m_RemovedGameObjects: []
@@ -102,6 +107,6 @@ MonoBehaviour:
   activeColor: {r: 0.6745098, g: 0.21568629, b: 0.21960786, a: 1}
   spawnTime: 0.5
   reactivateTime: 4
-  normalSpeed: 0
+  normalSpeed: 1
   defenseRadius: 5
-  returnSpeed: 0
+  returnSpeed: 2
