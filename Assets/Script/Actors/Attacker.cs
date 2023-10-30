@@ -6,6 +6,7 @@ public class Attacker : Soldier
 {
     private Ball ball;
     [SerializeField] private GameObject goalGate;
+    [SerializeField] private Transform feet;
 
     //Speeds
     [SerializeField] float carryingSpeed;
@@ -45,7 +46,7 @@ public class Attacker : Soldier
         }
     }
 
-    private IEnumerator MoveToGoal()
+    private IEnumerator CarryBall()
     {
         Vector3 goalGatePosition = new Vector3(goalGate.transform.position.x, transform.position.y, goalGate.transform.position.z);
         while (currentState == SoldierState.Dribbling)
@@ -84,10 +85,11 @@ public class Attacker : Soldier
         currentState = SoldierState.Dribbling;
 
         StopAllCoroutines();
-        StartCoroutine(MoveToGoal());
+        StartCoroutine(CarryBall());
 
         GameplayEvents.OnAttackerStartCarrying();
         // Ball position to this
+        StartCoroutine(ball.MoveBall(feet));
     }
 
     private void OnCaught()
