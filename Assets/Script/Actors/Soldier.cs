@@ -27,6 +27,18 @@ public class Soldier : MonoBehaviour
     // Speeds
     [SerializeField] protected float normalSpeed;
 
+    private void OnEnable()
+    {
+        GameplayEvents.OnAttackerStartCarryingE += SetCarrier;
+        GameplayEvents.OnHitCarrierE += RemoveCarrier;
+    }
+
+    private void OnDisable()
+    {
+        GameplayEvents.OnAttackerStartCarryingE -= SetCarrier;
+        GameplayEvents.OnHitCarrierE -= RemoveCarrier;
+    }
+
     protected virtual void Move(Vector3 target, float speed)
     {
         transform.position = Vector3.MoveTowards(transform.position, target, speed * Time.deltaTime);
@@ -53,6 +65,12 @@ public class Soldier : MonoBehaviour
 
     protected virtual void SetCarrier()
     {
+        if(FindObjectsOfType<Attacker>().Length < 1)
+        {
+            ballCarrier = null;
+            return;
+        }
+
         Attacker[] attackers = FindObjectsOfType<Attacker>();
         foreach (Attacker attacker in attackers)
         {
@@ -66,6 +84,11 @@ public class Soldier : MonoBehaviour
         // no carrier
         ballCarrier = null;
 
+    }
+
+    protected virtual void RemoveCarrier()
+    {
+        ballCarrier = null;
     }
 
     protected virtual void Reactivate()

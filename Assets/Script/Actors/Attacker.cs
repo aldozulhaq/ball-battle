@@ -14,10 +14,16 @@ public class Attacker : Soldier
     private void OnEnable()
     {
         GameplayEvents.OnAttackerStartCarryingE += MoveToFence;
+        GameplayEvents.OnAttackerStartCarryingE += SetCarrier;
+        GameplayEvents.OnHitCarrierE += RemoveCarrier;
+
     }
     private void OnDisable()
     {
         GameplayEvents.OnAttackerStartCarryingE -= MoveToFence;
+        GameplayEvents.OnAttackerStartCarryingE -= SetCarrier;
+        GameplayEvents.OnHitCarrierE -= RemoveCarrier;
+
     }
 
     private void Start()
@@ -37,9 +43,9 @@ public class Attacker : Soldier
     {
         currentState = SoldierState.Chasing;
 
-        Vector3 ballPosition = new Vector3(ball.transform.position.x, transform.position.y, ball.transform.position.z);
         while (currentState == SoldierState.Chasing)
         {
+            Vector3 ballPosition = new Vector3(ball.transform.position.x, transform.position.y, ball.transform.position.z);
             Move(ballPosition, normalSpeed);
 
             yield return new WaitForEndOfFrame();
@@ -79,8 +85,10 @@ public class Attacker : Soldier
 
     private void OnTouchBall()
     {
-        if (currentState != SoldierState.Chasing)
+        if (ballCarrier)
             return;
+
+        GameplayEvents.OnHitCarrierE += OnCaught;
 
         currentState = SoldierState.Dribbling;
 
@@ -88,20 +96,65 @@ public class Attacker : Soldier
         StartCoroutine(CarryBall());
 
         GameplayEvents.OnAttackerStartCarrying();
+
         // Ball position to this
         StartCoroutine(ball.MoveBall(feet));
     }
 
     private void OnCaught()
     {
-        // Inactive
+
         // Pass
+        Pass();
+
+        // Inactive
+        StartCoroutine(OnInactive());
+
+        GameplayEvents.OnHitCarrierE -= OnCaught;
     }
 
     private void OnTouchFence()
     {
         // Destroy
-        Destroy(this);
+        Destroy(this.gameObject);
+    }
+
+    private void Pass()
+    {
+        GameplayEvents.OnPassBall();
+        StartCoroutine(ball.PassBall(NearestAlly().GetFeet().transform));
+    }
+
+    private Attacker NearestAlly()
+    {
+        //Get all attackers
+        Attacker[] attackers = FindObjectsOfType<Attacker>();
+
+        if (attackers.Length < 2)       // if no ally
+            return null;
+
+        Attacker nearestAlly = attackers[0];
+
+        // Determine their distance with this
+        foreach (Attacker ally in attackers)
+        {
+            if (ally == this)
+                continue;
+
+            float nearest = Vector3.Distance(this.transform.position, nearestAlly.transform.position);
+            float potentialNearest = Vector3.Distance(this.transform.position, ally.transform.position);
+            if (nearest > potentialNearest)
+                nearestAlly = ally;
+        }
+
+        // Return the nearest
+        return nearestAlly;
+
+    }
+
+    public Transform GetFeet()
+    {
+        return feet;
     }
 
     private void OnTriggerEnter(Collider other)
@@ -109,6 +162,11 @@ public class Attacker : Soldier
         if (other.gameObject == ball.gameObject)
         {
             OnTouchBall();
+        }
+
+        if (other.gameObject.tag == "Fence")
+        {
+            OnTouchFence();
         }
     }
 }

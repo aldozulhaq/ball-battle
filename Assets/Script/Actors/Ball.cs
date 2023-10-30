@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
 
 public class Ball : MonoBehaviour
@@ -16,6 +17,16 @@ public class Ball : MonoBehaviour
     }
 
     #endregion
+
+    /*private void OnEnable()
+    {
+        GameplayEvents.OnHitCarrierE += OnAttackerGotHit;
+    }
+
+    private void OnDisable()
+    {
+        GameplayEvents.OnHitCarrierE -= OnAttackerGotHit;
+    }*/
 
     private void SpawnInRandomLocation()
     {
@@ -38,12 +49,23 @@ public class Ball : MonoBehaviour
         }
     }
 
-    public void PassBall(Transform targetFeet)
+    private void OnAttackerGotHit()
+    {
+        onPosession = false;
+        StopAllCoroutines();
+    }
+
+    public IEnumerator PassBall(Transform targetFeet)
     {
         onPosession = false;
 
-        StopAllCoroutines();
-        MoveBall(targetFeet);
+        while (Vector3.Distance(targetFeet.position, this.transform.position) >= 0f)
+        {
+            transform.position = Vector3.MoveTowards(transform.position, targetFeet.position, 3 * Time.deltaTime);
 
+            yield return new WaitForEndOfFrame();
+        }
+
+        StartCoroutine(MoveBall(targetFeet));
     }
 }

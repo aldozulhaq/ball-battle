@@ -82,8 +82,7 @@ public class Defender : Soldier
     private void OnCarrierChange()
     {
         StopAllCoroutines();
-        SetCarrier();
-        StartCoroutine(ChaseCarrier());
+        StartCoroutine(StandingBy());
     }
 
     private void OnHitCarrier()
