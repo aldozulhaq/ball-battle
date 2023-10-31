@@ -11,6 +11,8 @@ public static class GameplayEvents
     public static event Action OnAttackerStartCarryingE;
     public static event Action OnHitCarrierE;
     public static event Action OnPassBallE;
+    public static event Action OnAttackerWinE;
+    public static event Action OnDefenderWinE;
 
     public static void OnPlayerSpawn()
     {
@@ -30,5 +32,15 @@ public static class GameplayEvents
     public static void OnPassBall()
     {
         OnPassBallE?.Invoke();
+    }
+
+    public static void OnAttackerWin()
+    {
+        OnAttackerWinE?.Invoke();
+    }
+
+    public static void OnDefenderWin()
+    {
+        OnDefenderWinE?.Invoke();
     }
 }

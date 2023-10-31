@@ -5,8 +5,10 @@ using UnityEngine;
 public class Attacker : Soldier
 {
     private Ball ball;
-    [SerializeField] private GameObject goalGate;
+    private GameObject goalGate;
+
     [SerializeField] private Transform feet;
+    [SerializeField] private GameObject highlightObject;
 
     //Speeds
     [SerializeField] float carryingSpeed;
@@ -100,22 +102,22 @@ public class Attacker : Soldier
 
         GameplayEvents.OnAttackerStartCarrying();
 
+        highlightObject.SetActive(true);
         // Ball position to this
         StartCoroutine(ball.MoveBall(feet));
     }
 
     private void OnCaught()
     {
+        highlightObject.SetActive(false);
 
         // Pass
         Pass();
 
         // Inactive
-        StartCoroutine(OnInactive(() =>
-            GameplayEvents.OnHitCarrierE -= OnCaught
-        ));
+        StartCoroutine(OnInactive());
 
-        
+        GameplayEvents.OnHitCarrierE -= OnCaught;
     }
 
     private void OnTouchFence()
@@ -127,6 +129,13 @@ public class Attacker : Soldier
     private void Pass()
     {
         GameplayEvents.OnPassBall();
+
+        if(NearestAlly() == null)
+        {
+            GameplayEvents.OnDefenderWin();
+            Debug.Log("Defender Win!!");
+            return;
+        }
         StartCoroutine(ball.PassBall(NearestAlly().transform));
     }
 
@@ -135,7 +144,7 @@ public class Attacker : Soldier
         //Get all attackers
         Attacker[] attackers = FindObjectsOfType<Attacker>();
 
-        if (attackers.Length < 2)       // if no ally
+        if (attackers.Length < 2)       // if no ally, lose
             return null;
 
         Attacker nearestAlly = attackers[0];
@@ -144,6 +153,12 @@ public class Attacker : Soldier
         foreach (Attacker ally in attackers)
         {
             if (ally == this)
+                continue;
+
+            if (ally.currentState == SoldierState.Inactive)
+                continue;
+
+            if (ally == null)
                 continue;
 
             float nearest = Vector3.Distance(this.transform.position, nearestAlly.transform.position);

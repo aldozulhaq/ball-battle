@@ -53,7 +53,6 @@ public class Ball : MonoBehaviour
         while (Vector3.Distance(target.position, this.transform.position) > 0.1f)
         {
             transform.position = Vector3.MoveTowards(transform.position, target.position, 3 * Time.deltaTime);
-            Debug.Log(Vector3.Distance(target.position, this.transform.position));
 
             yield return new WaitForEndOfFrame();
         }
@@ -64,6 +63,7 @@ public class Ball : MonoBehaviour
     public void OnGoal()
     {
         Debug.Log("Goal!!!!");
+        GameplayEvents.OnAttackerWin();
     }
 
     private void OnTriggerEnter(Collider other)

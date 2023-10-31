@@ -31,12 +31,18 @@ public class Soldier : MonoBehaviour
     {
         GameplayEvents.OnAttackerStartCarryingE += SetCarrier;
         GameplayEvents.OnHitCarrierE += RemoveCarrier;
+
+        GameplayEvents.OnDefenderWinE += OnEndGame;
+        GameplayEvents.OnAttackerWinE += OnEndGame;
     }
 
     private void OnDisable()
     {
         GameplayEvents.OnAttackerStartCarryingE -= SetCarrier;
         GameplayEvents.OnHitCarrierE -= RemoveCarrier;
+
+        GameplayEvents.OnDefenderWinE -= OnEndGame;
+        GameplayEvents.OnAttackerWinE -= OnEndGame;
     }
 
     protected virtual void Move(Vector3 target, float speed)
@@ -110,5 +116,10 @@ public class Soldier : MonoBehaviour
     private void ChangeColor(Color color)
     {
         GetComponent<Renderer>().material.SetColor("_BaseColor", color);
+    }
+
+    private void OnEndGame()
+    {
+        StopAllCoroutines();
     }
 }
