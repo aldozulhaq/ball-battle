@@ -7,7 +7,7 @@ public class Ball : MonoBehaviour
 {
     [SerializeField] float ballSpeed;
     private bool onPosession;
-
+    private Attacker carrier;
     #region Singleton
 
     public static Ball instance;
@@ -33,11 +33,6 @@ public class Ball : MonoBehaviour
 
     }
 
-    private void OnTouchAttacker()
-    {
-
-    }
-
     public IEnumerator MoveBall(Transform attackerFeet)
     {
         onPosession = true;
@@ -49,23 +44,15 @@ public class Ball : MonoBehaviour
         }
     }
 
-    private void OnAttackerGotHit()
-    {
-        onPosession = false;
-        StopAllCoroutines();
-    }
-
-    public IEnumerator PassBall(Transform targetFeet)
+    public IEnumerator PassBall(Transform target)
     {
         onPosession = false;
 
-        while (Vector3.Distance(targetFeet.position, this.transform.position) >= 0f)
+        while (Vector3.Distance(target.position, this.transform.position) >= 0f)
         {
-            transform.position = Vector3.MoveTowards(transform.position, targetFeet.position, 3 * Time.deltaTime);
+            transform.position = Vector3.MoveTowards(transform.position, target.position, 3 * Time.deltaTime);
 
             yield return new WaitForEndOfFrame();
         }
-
-        StartCoroutine(MoveBall(targetFeet));
     }
 }

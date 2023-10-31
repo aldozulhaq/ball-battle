@@ -88,6 +88,9 @@ public class Attacker : Soldier
         if (ballCarrier)
             return;
 
+        if (currentState == SoldierState.Inactive)
+            return;
+
         GameplayEvents.OnHitCarrierE += OnCaught;
 
         currentState = SoldierState.Dribbling;
@@ -108,9 +111,11 @@ public class Attacker : Soldier
         Pass();
 
         // Inactive
-        StartCoroutine(OnInactive());
+        StartCoroutine(OnInactive(() =>
+            GameplayEvents.OnHitCarrierE -= OnCaught
+        ));
 
-        GameplayEvents.OnHitCarrierE -= OnCaught;
+        
     }
 
     private void OnTouchFence()
@@ -122,7 +127,7 @@ public class Attacker : Soldier
     private void Pass()
     {
         GameplayEvents.OnPassBall();
-        StartCoroutine(ball.PassBall(NearestAlly().GetFeet().transform));
+        StartCoroutine(ball.PassBall(NearestAlly().transform));
     }
 
     private Attacker NearestAlly()
@@ -159,9 +164,10 @@ public class Attacker : Soldier
 
     private void OnTriggerEnter(Collider other)
     {
-        if (other.gameObject == ball.gameObject)
+        if (other.gameObject == ball.gameObject )
         {
             OnTouchBall();
+            Debug.Log("Touch ball");
         }
 
         if (other.gameObject.tag == "Fence")

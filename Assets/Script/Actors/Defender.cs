@@ -55,10 +55,8 @@ public class Defender : Soldier
 
         while (currentState == SoldierState.Standby)
         {
-            if (!ballCarrier)
-                yield return null;
 
-            if (Vector3.Distance(this.transform.position, ballCarrier.transform.position) <= defenseRadius)
+            if (ballCarrier != null && Vector3.Distance(this.transform.position, ballCarrier.transform.position) <= defenseRadius)
             {
                 SetCurrentState(SoldierState.Chasing);
                 
@@ -81,8 +79,8 @@ public class Defender : Soldier
 
     private void OnCarrierChange()
     {
-        StopAllCoroutines();
-        StartCoroutine(StandingBy());
+        if (currentState != SoldierState.Inactive)
+            StartCoroutine(StandingBy());
     }
 
     private void OnHitCarrier()
@@ -92,7 +90,7 @@ public class Defender : Soldier
         StopAllCoroutines();
         StartCoroutine(OnInactive());
     }
-   protected override IEnumerator OnInactive()
+   protected override IEnumerator OnInactive(System.Action _Callback = null)
    {
         StartCoroutine(BackToSpawnPosition(() => 
             StartCoroutine(base.OnInactive())

@@ -52,7 +52,7 @@ public class Soldier : MonoBehaviour
 
     }
 
-    protected virtual IEnumerator OnInactive()
+    protected virtual IEnumerator OnInactive(System.Action _Callback = null)
     {
         currentState = SoldierState.Inactive;
         // TODO: Change color 
