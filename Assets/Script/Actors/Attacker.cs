@@ -175,4 +175,12 @@ public class Attacker : Soldier
             OnTouchFence();
         }
     }
+
+    protected override void Reactivate()
+    {
+        base.Reactivate();
+
+        currentState = SoldierState.Standby;
+        StartCoroutine(MoveToFenceCorroutine());
+    }
 }

@@ -35,6 +35,7 @@ public class Ball : MonoBehaviour
 
     public IEnumerator MoveBall(Transform attackerFeet)
     {
+        Debug.Log("Move Ball");
         onPosession = true;
         while (onPosession)
         {
@@ -46,13 +47,30 @@ public class Ball : MonoBehaviour
 
     public IEnumerator PassBall(Transform target)
     {
+        Debug.Log("Passing");
         onPosession = false;
 
-        while (Vector3.Distance(target.position, this.transform.position) >= 0f)
+        while (Vector3.Distance(target.position, this.transform.position) > 0.1f)
         {
             transform.position = Vector3.MoveTowards(transform.position, target.position, 3 * Time.deltaTime);
+            Debug.Log(Vector3.Distance(target.position, this.transform.position));
 
             yield return new WaitForEndOfFrame();
+        }
+
+        Debug.Log("End of Pass");
+    }
+
+    public void OnGoal()
+    {
+        Debug.Log("Goal!!!!");
+    }
+
+    private void OnTriggerEnter(Collider other)
+    {
+        if (other.gameObject.tag == "Finish")
+        {
+            OnGoal();
         }
     }
 }
