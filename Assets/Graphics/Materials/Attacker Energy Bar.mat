@@ -20,7 +20,7 @@ Material:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: Square Bar Mat
+  m_Name: Attacker Energy Bar
   m_Shader: {fileID: -6465566751694194690, guid: 752e0a76bd017cd4fad8d9827bbe5b03,
     type: 3}
   m_Parent: {fileID: 0}
@@ -71,7 +71,7 @@ Material:
     m_Colors:
     - _Bar_Box_Color: {r: 0.5754717, g: 0, b: 0, a: 0}
     - _Bar_Color: {r: 1, g: 0, b: 0.107142925, a: 0}
-    - _Bar_Mask_Size: {r: 0.955, g: 0.32, b: 0, a: 0}
+    - _Bar_Mask_Size: {r: 0.95, g: 0.32, b: 0, a: 0}
     - _BgBox_Color: {r: 0.2735849, g: 0, b: 0, a: 0}
     - _Bg_Color: {r: 0, g: 0.21568628, b: 0.028963838, a: 0}
     - _Inner_Box_Size: {r: 0.97, g: 0.4, b: 0, a: 0}
