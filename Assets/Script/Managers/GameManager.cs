@@ -1,32 +1,60 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
+
+public class Player
+{
+    Fraction playerFraction;
+    string name;
+
+    public Player(Fraction fraction, string name)
+    {
+        this.playerFraction = fraction;
+        this.name = name;
+    }
+}
 
 public class GameManager : MonoBehaviour
 {
     private int matchCount;
+    private int playerReadyCount;
     
     private Fraction player1Fraction;
     private Fraction player2Fraction;
     
     [SerializeField] GameObject field;
+    GameObject mainCamera;
+
+    [SerializeField] Button readyButton;
+    [SerializeField] GameObject readyPanel;
+    [SerializeField] Text matchText;
+
+    private void Awake()
+    {
+        readyButton.onClick.AddListener(OnGameStart);
+    }
 
     private void Start()
     {
+        mainCamera = Camera.main.gameObject;
+
         player1Fraction = Fraction.Attacker;
         player2Fraction = Fraction.Defender;
 
-        OnGameStart();
+        matchCount = 1;
+        ShowReadyPanel();
     }
 
-    private void OnGameStart()
+    public void OnGameStart()
     {
+        readyPanel.SetActive(false);
         GameplayEvents.OnGameStart();
     }
 
     private void OnGameEnd()
     {
-        GameplayEvents.OnGameEnd();
+        
     }
 
     private void ResetGame()
@@ -38,18 +66,25 @@ public class GameManager : MonoBehaviour
 
     private void SwitchSide()
     {
-        // Rotate Camera
 
         if (player1Fraction == Fraction.Attacker)
         {
+            mainCamera.transform.eulerAngles = new Vector3(mainCamera.transform.eulerAngles.x, 180f, mainCamera.transform.eulerAngles.z);
             player1Fraction = Fraction.Defender;
             player2Fraction = Fraction.Attacker;
         }
         else
         {
+            mainCamera.transform.eulerAngles = new Vector3(mainCamera.transform.eulerAngles.x, 0f, mainCamera.transform.eulerAngles.z);
             player1Fraction = Fraction.Attacker;
             player2Fraction = Fraction.Defender;
         }
+    }
+
+    [ContextMenu("Test Rotate")]
+    private void RotateCamera()
+    {
+        mainCamera.transform.eulerAngles = new Vector3(mainCamera.transform.eulerAngles.x, 180f, mainCamera.transform.eulerAngles.z);
     }
 
     public int GetMatchCount()
@@ -80,5 +115,11 @@ public class GameManager : MonoBehaviour
         Debug.Log(randomSpot);
 
         return randomSpot;
+    }
+
+    private void ShowReadyPanel()
+    {
+        readyPanel.SetActive(true);
+        matchText.text = "Match " + matchCount.ToString();
     }
 }

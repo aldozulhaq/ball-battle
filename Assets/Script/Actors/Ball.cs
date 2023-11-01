@@ -58,7 +58,7 @@ public class Ball : MonoBehaviour
     public void OnGoal()
     {
         Debug.Log("Goal!!!!");
-        GameplayEvents.OnAttackerWin();
+        GameplayEvents.OnGameEnd(Fraction.Attacker);
     }
 
     private void OnTriggerEnter(Collider other)

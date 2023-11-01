@@ -13,13 +13,33 @@ public class EnergyBar : MonoBehaviour
     float timeSinceLastRefill = 0;
     public float currentBar;
 
-    private void Start()
+    [SerializeField] Color attackerColor;
+    [SerializeField] Color defenderColor;
+    private bool isGameRunning;
+
+    private void OnEnable()
     {
         GameplayEvents.CheckEnergy += OnSoldierSpawn;
+        GameplayEvents.OnGameStartE += StartFilling;
+        GameplayEvents.OnGameEndE += StopFilling;
+    }
+    private void OnDisable()
+    {
+        GameplayEvents.CheckEnergy -= OnSoldierSpawn;
+        GameplayEvents.OnGameStartE -= StartFilling;
+        GameplayEvents.OnGameEndE -= StopFilling;
+    }
+
+    private void Start()
+    {
+        StopFilling(fraction);      // it doesn't matter which fraction. parameter here were made just to match the delegate
     }
 
     private void Update()
     {
+        if (!isGameRunning)
+            return;
+
         if(currentBar < maxBars)
         {
             timeSinceLastRefill += Time.deltaTime;
@@ -49,5 +69,30 @@ public class EnergyBar : MonoBehaviour
                 GameplayEvents.CheckFractionEnergy(fraction, 1);
             }
         }
+    }
+
+    private void SwitchFraction()
+    {
+        Image energyImage = GetComponent<Image>();
+        if (fraction == Fraction.Attacker)
+        {
+            fraction = Fraction.Defender;
+            energyImage.color = defenderColor;
+        }
+        else
+        {
+            fraction = Fraction.Attacker;
+            energyImage.color = attackerColor;
+        }
+    }
+
+    private void StartFilling()
+    {
+        isGameRunning = true;
+    }
+
+    private void StopFilling(Fraction fraction)
+    {
+        isGameRunning = false;
     }
 }

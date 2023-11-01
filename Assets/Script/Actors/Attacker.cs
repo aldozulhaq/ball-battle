@@ -26,6 +26,8 @@ public class Attacker : Soldier
         GameplayEvents.OnAttackerStartCarryingE -= SetCarrier;
         GameplayEvents.OnHitCarrierE -= RemoveCarrier;
 
+        GameplayEvents.OnHitCarrierE -= OnCaught;   // OnCaught only subscribe if it's carrying/dribbling ball
+
     }
 
     private void Start()
@@ -129,7 +131,7 @@ public class Attacker : Soldier
 
         if(NearestAlly() == null)
         {
-            GameplayEvents.OnDefenderWin();
+            GameplayEvents.OnGameEnd(Fraction.Defender);
             Debug.Log("Defender Win!!");
             return;
         }

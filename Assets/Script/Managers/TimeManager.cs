@@ -11,15 +11,21 @@ public class TimeManager : MonoBehaviour
     [SerializeField] float maxTimer = 150f;
     float currentTime;
 
-    void Start()
+    private void OnEnable()
     {
-        currentTime = maxTimer;
-        StartCountdown();
+        GameplayEvents.OnGameStartE += StartCountdown;
+        GameplayEvents.OnGameEndE += StopCountdown;
+    }
+    private void OnDisable()
+    {
+        GameplayEvents.OnGameStartE -= StartCountdown;
+        GameplayEvents.OnGameEndE -= StopCountdown;
     }
 
     void StartCountdown()
     {
         StartCoroutine(Countdown());
+        currentTime = maxTimer;
     }
 
     IEnumerator Countdown()
@@ -43,6 +49,11 @@ public class TimeManager : MonoBehaviour
         GetComponent<Image>().material.SetFloat("_Progress", 0.0f);
 
         GameplayEvents.OnTimerEnd();
-        Debug.Log("Defender Win!!");
+        GameplayEvents.OnGameEnd(Fraction.Defender);
+    }
+
+    private void StopCountdown(Fraction fraction)       // parameter were made only to match the delegate
+    {
+        StopCoroutine(Countdown());
     }
 }

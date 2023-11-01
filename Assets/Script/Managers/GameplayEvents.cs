@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
 
 public static class GameplayEvents
@@ -13,10 +14,12 @@ public static class GameplayEvents
     public static event Action OnDefenderWinE;
     public static event Action OnTimerEndE;
     public static event Action OnGameStartE;
-    public static event Action OnGameEndE;
 
     public delegate void OnSoldierSpawn(Fraction fraction, int canSpawn); // 0 - can't spawn, 1 - can spawn, 2 - just checking
     public static event OnSoldierSpawn CheckEnergy;
+
+    public delegate void OnGameEndDelegate(Fraction winningFraction);
+    public static event OnGameEndDelegate OnGameEndE;
     
     public static void OnPlayerSpawn()
     {
@@ -63,8 +66,8 @@ public static class GameplayEvents
         OnGameStartE?.Invoke();
     }
 
-    public static void OnGameEnd()
+    public static void OnGameEnd(Fraction winningFraction)
     {
-        OnGameEndE?.Invoke();
+        OnGameEndE?.Invoke(winningFraction);
     }
 }
