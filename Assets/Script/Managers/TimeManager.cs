@@ -11,8 +11,6 @@ public class TimeManager : MonoBehaviour
     [SerializeField] float maxTimer = 150f;
     float currentTime;
 
-
-
     void Start()
     {
         currentTime = maxTimer;
@@ -43,5 +41,7 @@ public class TimeManager : MonoBehaviour
         // Ensure timer is 0
         timerText.text = "0";
         GetComponent<Image>().material.SetFloat("_Progress", 0.0f);
+
+        GameplayEvents.OnTimerEnd();
     }
 }
