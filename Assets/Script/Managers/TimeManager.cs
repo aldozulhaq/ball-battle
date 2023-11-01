@@ -50,10 +50,16 @@ public class TimeManager : MonoBehaviour
 
         GameplayEvents.OnTimerEnd();
         GameplayEvents.OnGameEnd(Fraction.Defender);
+        Debug.Log("Time's up");
     }
 
     private void StopCountdown(Fraction fraction)       // parameter were made only to match the delegate
     {
         StopCoroutine(Countdown());
+    }
+
+    private void OnReset()
+    {
+
     }
 }

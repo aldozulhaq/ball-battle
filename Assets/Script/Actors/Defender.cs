@@ -15,10 +15,16 @@ public class Defender : Soldier
     private void OnEnable()
     {
         GameplayEvents.OnAttackerStartCarryingE += OnCarrierChange;
+
+        GameplayEvents.OnGameEndE += OnEndGame;
+        GameplayEvents.OnResetE += OnReset;
     }
     private void OnDisable()
     {
         GameplayEvents.OnAttackerStartCarryingE -= OnCarrierChange;
+
+        GameplayEvents.OnGameEndE -= OnEndGame;
+        GameplayEvents.OnResetE -= OnReset;
     }
 
     private void Start()

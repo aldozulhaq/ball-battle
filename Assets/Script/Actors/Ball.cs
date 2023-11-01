@@ -13,20 +13,20 @@ public class Ball : MonoBehaviour
     public static Ball instance;
     private void Awake()
     {
-        instance = this;
+        instance = this;   
     }
 
     #endregion
 
-    /*private void OnEnable()
+    private void OnEnable()
     {
-        GameplayEvents.OnHitCarrierE += OnAttackerGotHit;
+        GameplayEvents.OnResetE += OnReset;
     }
 
     private void OnDisable()
     {
-        GameplayEvents.OnHitCarrierE -= OnAttackerGotHit;
-    }*/
+        GameplayEvents.OnResetE -= OnReset;
+    }
 
     public IEnumerator MoveBall(Transform attackerFeet)
     {
@@ -61,6 +61,11 @@ public class Ball : MonoBehaviour
         GameplayEvents.OnGameEnd(Fraction.Attacker);
     }
 
+    private void OnReset()
+    {
+        Destroy(this.gameObject);
+    }
+
     private void OnTriggerEnter(Collider other)
     {
         if (other.gameObject.tag == "Finish")
@@ -68,4 +73,6 @@ public class Ball : MonoBehaviour
             OnGoal();
         }
     }
+
+
 }

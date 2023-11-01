@@ -14,6 +14,7 @@ public static class GameplayEvents
     public static event Action OnDefenderWinE;
     public static event Action OnTimerEndE;
     public static event Action OnGameStartE;
+    public static event Action OnResetE;
 
     public static event Action<Color, Color> SetPlayerColorE;
 
@@ -76,5 +77,10 @@ public static class GameplayEvents
     public static void SetPlayerColor(Color player1Color, Color player2Color)
     {
         SetPlayerColorE?.Invoke(player1Color, player2Color);
+    }
+
+    public static void OnReset()
+    {
+        OnResetE?.Invoke();
     }
 }

@@ -18,7 +18,7 @@ public class Soldier : MonoBehaviour
     protected GameObject ballCarrier;
 
     [SerializeField] Color inactiveColor;
-    [SerializeField] public Color activeColor;
+    public Color activeColor;
 
     // Durations
     [SerializeField] protected float spawnTime;
@@ -31,18 +31,12 @@ public class Soldier : MonoBehaviour
     {
         GameplayEvents.OnAttackerStartCarryingE += SetCarrier;
         GameplayEvents.OnHitCarrierE += RemoveCarrier;
-
-        GameplayEvents.OnDefenderWinE += OnEndGame;
-        GameplayEvents.OnAttackerWinE += OnEndGame;
     }
 
     private void OnDisable()
     {
         GameplayEvents.OnAttackerStartCarryingE -= SetCarrier;
         GameplayEvents.OnHitCarrierE -= RemoveCarrier;
-
-        GameplayEvents.OnDefenderWinE -= OnEndGame;
-        GameplayEvents.OnAttackerWinE -= OnEndGame;
     }
 
     protected virtual void Move(Vector3 target, float speed)
@@ -125,8 +119,14 @@ public class Soldier : MonoBehaviour
         GetComponent<Renderer>().material.SetColor("_BaseColor", color);
     }
 
-    private void OnEndGame()
+    protected void OnEndGame(Fraction fraction)
     {
-        StopAllCoroutines();
+        Debug.Log("End");
+        currentState = SoldierState.Inactive;
+    }
+
+    protected void OnReset()
+    {
+        Destroy(this.gameObject);
     }
 }

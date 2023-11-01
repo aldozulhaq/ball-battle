@@ -3,18 +3,6 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class Player
-{
-    Fraction playerFraction;
-    string name;
-
-    public Player(Fraction fraction, string name)
-    {
-        this.playerFraction = fraction;
-        this.name = name;
-    }
-}
-
 public class GameManager : MonoBehaviour
 {
     private int matchCount;
@@ -35,6 +23,20 @@ public class GameManager : MonoBehaviour
     [SerializeField] GameObject readyPanel;
     [SerializeField] Text matchText;
 
+    GameObject winPanel;
+    [SerializeField] GameObject attackerWinPanel;
+    [SerializeField] GameObject defenderWinPanel;
+
+    private void OnEnable()
+    {
+        GameplayEvents.OnGameEndE += OnGameEnd;
+    }
+
+    private void OnDisable()
+    {
+        GameplayEvents.OnGameEndE -= OnGameEnd;
+    }
+
     private void Awake()
     {
         readyButton.onClick.AddListener(OnGameStart);
@@ -52,11 +54,12 @@ public class GameManager : MonoBehaviour
     private void Start()
     {
         mainCamera = Camera.main.gameObject;
+        winPanel = attackerWinPanel.transform.parent.gameObject;
 
         player1Fraction = Fraction.Attacker;
         player2Fraction = Fraction.Defender;
 
-        matchCount = 1;
+        matchCount = 1; 
         ShowReadyPanel();
     }
 
@@ -68,16 +71,39 @@ public class GameManager : MonoBehaviour
         GameplayEvents.SetPlayerColor(player1Color, player2Color);
     }
 
-    private void OnGameEnd()
+    private void OnGameEnd(Fraction winningFraction)
     {
-        
+        winPanel.SetActive(true);
+        defenderWinPanel.SetActive(false);
+        attackerWinPanel.SetActive(false);
+
+
+        if (winningFraction == Fraction.Attacker)
+        {
+            attackerWinPanel.SetActive(true);
+        }
+        else
+        {
+            defenderWinPanel.SetActive(true);
+        }
     }
 
     private void ResetGame()
     {
-        // Delete Players
+        GameplayEvents.OnReset();
 
-        // Delete Ball
+        // Deactive winPanel
+        winPanel.SetActive(false);
+    }
+
+    public void ContinueGame()
+    {
+        ResetGame();
+
+        SwitchSide();
+
+        matchCount++;
+        ShowReadyPanel();
     }
 
     private void SwitchSide()
@@ -95,12 +121,6 @@ public class GameManager : MonoBehaviour
             player1Fraction = Fraction.Attacker;
             player2Fraction = Fraction.Defender;
         }
-    }
-
-    [ContextMenu("Test Rotate")]
-    private void RotateCamera()
-    {
-        mainCamera.transform.eulerAngles = new Vector3(mainCamera.transform.eulerAngles.x, 180f, mainCamera.transform.eulerAngles.z);
     }
 
     public int GetMatchCount()

@@ -19,6 +19,9 @@ public class Attacker : Soldier
         GameplayEvents.OnAttackerStartCarryingE += SetCarrier;
         GameplayEvents.OnHitCarrierE += RemoveCarrier;
 
+        GameplayEvents.OnGameEndE += OnEndGame;
+        GameplayEvents.OnResetE += OnReset;
+
     }
     private void OnDisable()
     {
@@ -27,6 +30,9 @@ public class Attacker : Soldier
         GameplayEvents.OnHitCarrierE -= RemoveCarrier;
 
         GameplayEvents.OnHitCarrierE -= OnCaught;   // OnCaught only subscribe if it's carrying/dribbling ball
+
+        GameplayEvents.OnGameEndE -= OnEndGame;
+        GameplayEvents.OnResetE -= OnReset;
 
     }
 
@@ -201,8 +207,5 @@ public class Attacker : Soldier
         }
         else
             StartCoroutine(ChaseBall());
-
-        /*currentState = SoldierState.Standby;
-        StartCoroutine(MoveToFenceCorroutine());*/
     }
 }
