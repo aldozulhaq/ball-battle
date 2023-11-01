@@ -1,6 +1,8 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using static GameplayEvents;
 
 public enum Fraction
 {
@@ -12,6 +14,13 @@ public class Spawner : MonoBehaviour
 {
     [SerializeField] GameObject attackerPrefab;
     [SerializeField] GameObject defenderPrefab;
+
+    Vector3 hitPosition;
+
+    private void Start()
+    {
+        GameplayEvents.CheckEnergy += CheckHaveEnergy;
+    }
 
     void Update()
     {
@@ -27,12 +36,29 @@ public class Spawner : MonoBehaviour
             if (!field)       // Only if player click on Field
                 return;
 
-            Vector3 hitPosition = Camera.main.ScreenToWorldPoint(Input.mousePosition);      // Get mouse pos in world point
+            hitPosition = Camera.main.ScreenToWorldPoint(Input.mousePosition);      // Get mouse pos in world point
 
-            if (field.GetFieldFraction() == Fraction.Attacker)
-                Instantiate(attackerPrefab, new Vector3(hitPosition.x, attackerPrefab.transform.position.y, hitPosition.z), Quaternion.identity);
-            else
-                Instantiate(defenderPrefab, new Vector3(hitPosition.x, defenderPrefab.transform.position.y, hitPosition.z), Quaternion.identity);
+            GameplayEvents.CheckFractionEnergy(field.GetFieldFraction(), 2);
+            //HandleSpawn(field.GetFieldFraction(), hitPosition);
+        }
+    }
+
+    void CheckHaveEnergy(Fraction fraction, int canSpawn)
+    {
+        if(canSpawn == 0)
+            HandleSpawn(fraction, hitPosition);
+    }
+
+    void HandleSpawn(Fraction fraction, Vector3 pos)
+    {
+
+        if (fraction == Fraction.Attacker)
+        {
+            Instantiate(attackerPrefab, new Vector3(pos.x, 0.55f, pos.z), Quaternion.identity);
+        }
+        else if (fraction == Fraction.Defender)
+        {
+            Instantiate(defenderPrefab, new Vector3(pos.x, 0.55f, pos.z), Quaternion.identity);
         }
     }
 }

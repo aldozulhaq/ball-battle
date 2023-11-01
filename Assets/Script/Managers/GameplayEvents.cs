@@ -14,6 +14,9 @@ public static class GameplayEvents
     public static event Action OnAttackerWinE;
     public static event Action OnDefenderWinE;
 
+    public delegate void OnSoldierSpawn(Fraction fraction, int canSpawn); // 0 - can't spawn, 1 - can spawn, 2 - just checking
+    public static event OnSoldierSpawn CheckEnergy;
+
     public static void OnPlayerSpawn()
     {
         OnPlayerSpawnE?.Invoke();
@@ -42,5 +45,10 @@ public static class GameplayEvents
     public static void OnDefenderWin()
     {
         OnDefenderWinE?.Invoke();
+    }
+
+    public static void CheckFractionEnergy(Fraction fraction, int canSpawn)
+    {
+        CheckEnergy?.Invoke(fraction, canSpawn);
     }
 }
