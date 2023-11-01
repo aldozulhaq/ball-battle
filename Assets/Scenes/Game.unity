@@ -556,7 +556,7 @@ GameObject:
   - component: {fileID: 375238103}
   m_Layer: 0
   m_Name: goal_pole_left
-  m_TagString: Untagged
+  m_TagString: GoalPost
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -1077,6 +1077,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6dfe1f02ee4ef1b4b94006edae21b1e4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  player1Color: {r: 1, g: 0.93226576, b: 0, a: 1}
+  player2Color: {r: 0, g: 0.58332276, b: 1, a: 1}
   field: {fileID: 2106048447}
   readyButton: {fileID: 806003711}
   readyPanel: {fileID: 1517738563}
@@ -1891,7 +1893,7 @@ GameObject:
   - component: {fileID: 1604800761}
   m_Layer: 0
   m_Name: goal_pole_right
-  m_TagString: Untagged
+  m_TagString: GoalPost
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -1998,7 +2000,7 @@ GameObject:
   - component: {fileID: 1661709744}
   m_Layer: 0
   m_Name: top_fence
-  m_TagString: Fence
+  m_TagString: AttackerFence
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -2667,7 +2669,7 @@ GameObject:
   - component: {fileID: 2115276062}
   m_Layer: 0
   m_Name: goal_top
-  m_TagString: Untagged
+  m_TagString: GoalPost
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0

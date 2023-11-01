@@ -22,10 +22,15 @@ public class GameManager : MonoBehaviour
     
     private Fraction player1Fraction;
     private Fraction player2Fraction;
-    
+
+    [Header("Fraction Color")]
+    [SerializeField] public Color player1Color;
+    [SerializeField] public Color player2Color;
+
     [SerializeField] GameObject field;
     GameObject mainCamera;
 
+    [Header("UI")]
     [SerializeField] Button readyButton;
     [SerializeField] GameObject readyPanel;
     [SerializeField] Text matchText;
@@ -59,6 +64,7 @@ public class GameManager : MonoBehaviour
         }
 
         GameplayEvents.OnGameStart();
+        GameplayEvents.SetPlayerColor(player1Color, player2Color);
     }
 
     private void OnGameEnd()

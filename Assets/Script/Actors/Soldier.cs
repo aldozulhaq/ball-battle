@@ -18,7 +18,7 @@ public class Soldier : MonoBehaviour
     protected GameObject ballCarrier;
 
     [SerializeField] Color inactiveColor;
-    [SerializeField] Color activeColor;
+    [SerializeField] public Color activeColor;
 
     // Durations
     [SerializeField] protected float spawnTime;

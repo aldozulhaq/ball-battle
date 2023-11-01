@@ -61,12 +61,13 @@ Material:
     - _Bar_Width: 0.763
     - _Inner_Box_Height: 0.45
     - _Inner_Box_Width: 0.96
-    - _Progress: 1
+    - _Progress: 0.70027596
     - _QueueControl: 0
     - _QueueOffset: 0
     - _Segment_Width: 0.15
     - _Segment_X: 0.34
     - _Segmented_Amount: 6
+    - _TrueBarProgress: 0.5
     - _Width: 0.56
     m_Colors:
     - _Bar_Box_Color: {r: 0.5754717, g: 0, b: 0, a: 0}

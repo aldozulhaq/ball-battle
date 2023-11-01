@@ -22,12 +22,16 @@ public class EnergyBar : MonoBehaviour
         GameplayEvents.CheckEnergy += OnSoldierSpawn;
         GameplayEvents.OnGameStartE += StartFilling;
         GameplayEvents.OnGameEndE += StopFilling;
+
+        GameplayEvents.SetPlayerColorE += SetPlayerColor;
     }
     private void OnDisable()
     {
         GameplayEvents.CheckEnergy -= OnSoldierSpawn;
         GameplayEvents.OnGameStartE -= StartFilling;
         GameplayEvents.OnGameEndE -= StopFilling;
+
+        GameplayEvents.SetPlayerColorE -= SetPlayerColor;
     }
 
     private void Start()
@@ -53,6 +57,21 @@ public class EnergyBar : MonoBehaviour
         // Update the material parameter (_progress) to display the bar.
         float progress = Mathf.Lerp(currentBar / (float)maxBars, (currentBar + 1) / (float)maxBars, timeSinceLastRefill / refillRate);
         GetComponent<Image>().material.SetFloat("_Progress", progress);
+    }
+
+    void SetPlayerColor(Color player1Color, Color player2Color)
+    {
+        attackerColor = player1Color;
+        defenderColor = player2Color;
+
+        if (fraction == Fraction.Attacker)
+        {
+            GetComponent<Image>().color = attackerColor;
+        }
+        else
+        {
+            GetComponent<Image>().color = defenderColor;
+        }
     }
 
     void OnSoldierSpawn(Fraction fraction, int canSpawn)

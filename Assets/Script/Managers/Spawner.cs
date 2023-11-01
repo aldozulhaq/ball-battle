@@ -68,11 +68,13 @@ public class Spawner : MonoBehaviour
     {
         if (fraction == Fraction.Attacker)
         {
-            Instantiate(attackerPrefab, new Vector3(pos.x, 0.55f, pos.z), Quaternion.identity);
+            var obj = Instantiate(attackerPrefab, new Vector3(pos.x, 0.55f, pos.z), Quaternion.identity);
+            obj.GetComponent<Attacker>().activeColor = gameManager.player1Color;
         }
         else if (fraction == Fraction.Defender)
         {
-            Instantiate(defenderPrefab, new Vector3(pos.x, 0.55f, pos.z), Quaternion.identity);
+            var obj = Instantiate(defenderPrefab, new Vector3(pos.x, 0.55f, pos.z), Quaternion.identity);
+            obj.GetComponent<Defender>().activeColor = gameManager.player2Color;
         }
     }
 
