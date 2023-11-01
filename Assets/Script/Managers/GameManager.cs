@@ -49,6 +49,15 @@ public class GameManager : MonoBehaviour
     public void OnGameStart()
     {
         readyPanel.SetActive(false);
+        
+        foreach(Field f in FindObjectsOfType<Field>())
+        {
+            if(f.GetFieldFraction() == Fraction.Attacker)
+            {
+                field = f.gameObject;
+            }
+        }
+
         GameplayEvents.OnGameStart();
     }
 
