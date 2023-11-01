@@ -11,6 +11,9 @@ public class Defender : Soldier
 
     // Speeds
     [SerializeField] float returnSpeed;
+    [SerializeField] GameObject radius;
+    float radiusMaxScale;
+    float radiusMinScale;
 
     private void OnEnable()
     {
@@ -29,6 +32,9 @@ public class Defender : Soldier
 
     private void Start()
     {
+        radiusMaxScale = 1.3f;
+        radiusMinScale = radiusMaxScale / 10;
+
         soldierFraction = Fraction.Defender;
         startPos = this.transform.position;
         StartCoroutine(OnSpawning());
@@ -101,18 +107,18 @@ public class Defender : Soldier
     }
    protected override IEnumerator OnInactive(System.Action _Callback = null)
    {
-
+        StartCoroutine(AnimateRadiusToMin());
         StartCoroutine(base.OnInactive(() => 
             StartCoroutine(BackToSpawnPosition())
         ));
 
         yield return null;
-
    }
  
     protected override void Reactivate()
     {
         base.Reactivate();
+        StartCoroutine(AnimateRadiusToMax());
         StartCoroutine(StandingBy());
     }
 
@@ -120,6 +126,34 @@ public class Defender : Soldier
     {
         Gizmos.color = Color.red;
         Gizmos.DrawWireSphere(transform.position, defenseRadius);
+    }
+
+    private IEnumerator AnimateRadiusToMax()
+    {
+        float t = 0;
+
+        while (t < 1)
+        {
+            t += Time.deltaTime;
+            float scale = Mathf.Lerp(radiusMinScale, radiusMaxScale, t);
+            radius.transform.localScale = new Vector3(scale, scale, scale);
+
+            yield return new WaitForEndOfFrame();
+        }
+    }
+
+    private IEnumerator AnimateRadiusToMin()
+    {
+        float t = 0;
+
+        while (t < 1)
+        {
+            t += Time.deltaTime;
+            float scale = Mathf.SmoothStep(radiusMaxScale, radiusMinScale, t);
+            radius.transform.localScale = new Vector3(scale, scale, scale);
+
+            yield return new WaitForEndOfFrame();
+        }
     }
 
     private IEnumerator BackToSpawnPosition(System.Action _Callback = null)

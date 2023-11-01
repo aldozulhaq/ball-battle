@@ -7,8 +7,8 @@ Material:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: Timer
-  m_Shader: {fileID: -6465566751694194690, guid: 83ba4335e22c4b74fb2b34c5c18f8da2,
+  m_Name: DefenderRadius
+  m_Shader: {fileID: -6465566751694194690, guid: ea0af202f12b299498b732af8e234f1d,
     type: 3}
   m_Parent: {fileID: 0}
   m_ModifiedSerializedProperties: 0
@@ -42,16 +42,16 @@ Material:
         m_Offset: {x: 0, y: 0}
     m_Ints: []
     m_Floats:
-    - _LineWidth: 0.03
-    - _Progress: 0.8740968
+    - _Bar_Length: 0.16
+    - _Bar_Width: 0.03
     - _QueueControl: 0
     - _QueueOffset: 0
-    - _Radius: 0.579
-    - _Rot: 0
-    - _Size: 0.5
+    - _Radius: 0.53
+    - _Speed: 50
+    - _Width: 0
     m_Colors: []
   m_BuildTextureStacks: []
---- !u!114 &5775920987443076918
+--- !u!114 &6542351120899425720
 MonoBehaviour:
   m_ObjectHideFlags: 11
   m_CorrespondingSourceObject: {fileID: 0}
