@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
 public class ScoreManager : MonoBehaviour
@@ -10,6 +11,7 @@ public class ScoreManager : MonoBehaviour
     [SerializeField] ScoreBoard player1FinalScore;
     [SerializeField] ScoreBoard player2FinalScore;
     [SerializeField] Text winText;
+    [SerializeField] Button restartScene;
 
     private void OnEnable()
     {
@@ -18,6 +20,11 @@ public class ScoreManager : MonoBehaviour
     private void OnDisable()
     {
         GameplayEvents.OnMatchEndE -= OnMatchWin;
+    }
+
+    private void Awake()
+    {
+        restartScene.onClick.AddListener(RestartGame);
     }
 
     private void Start()
@@ -46,5 +53,10 @@ public class ScoreManager : MonoBehaviour
             player1FinalScore.SetScoreBoard(player1.GetScore(), player1.GetName());
             player2FinalScore.SetScoreBoard(player2.GetScore(), player2.GetName());
         }
+    }
+
+    private void RestartGame()
+    {
+        SceneManager.LoadScene(SceneManager.GetActiveScene().name);
     }
 }
