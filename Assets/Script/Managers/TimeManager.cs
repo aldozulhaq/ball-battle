@@ -9,6 +9,7 @@ public class TimeManager : MonoBehaviour
 {
     [SerializeField] TextMeshProUGUI timerText;
     [SerializeField] float maxTimer = 150f;
+    bool isGameRunning;
     float currentTime;
 
     private void OnEnable()
@@ -25,6 +26,7 @@ public class TimeManager : MonoBehaviour
     void StartCountdown()
     {
         currentTime = maxTimer;
+        isGameRunning = true;
         StartCoroutine(Countdown());
     }
 
@@ -41,6 +43,9 @@ public class TimeManager : MonoBehaviour
             float progress = currentTime / maxTimer;
             GetComponent<Image>().material.SetFloat("_Progress", progress);
 
+            if (!isGameRunning)
+                yield break;
+
             yield return null;
         }
 
@@ -56,10 +61,6 @@ public class TimeManager : MonoBehaviour
     private void StopCountdown(Fraction fraction)       // parameter were made only to match the delegate
     {
         StopCoroutine(Countdown());
-    }
-
-    private void OnReset()
-    {
-
+        isGameRunning = false;
     }
 }

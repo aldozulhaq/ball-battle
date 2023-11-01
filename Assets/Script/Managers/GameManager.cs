@@ -87,6 +87,8 @@ public class GameManager : MonoBehaviour
 
     private void Awake()
     {
+        Screen.SetResolution(1080, 1920, false);
+
         readyButton.onClick.AddListener(OnMatchStart);
 
 
