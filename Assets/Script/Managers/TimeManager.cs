@@ -24,8 +24,8 @@ public class TimeManager : MonoBehaviour
 
     void StartCountdown()
     {
-        StartCoroutine(Countdown());
         currentTime = maxTimer;
+        StartCoroutine(Countdown());
     }
 
     IEnumerator Countdown()
