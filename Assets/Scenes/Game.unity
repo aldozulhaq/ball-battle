@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
-  m_IndirectSpecularColor: {r: 0.18028334, g: 0.2257134, b: 0.30692226, a: 1}
+  m_IndirectSpecularColor: {r: 0.18028378, g: 0.22571412, b: 0.30692285, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -1613,6 +1613,8 @@ MonoBehaviour:
   defenderPrefab: {fileID: 5798911966524060577, guid: f2a9ad1f01dad734f81b3dd774f0cef9,
     type: 3}
   ballPrefab: {fileID: 485512739152547114, guid: a1a8d209adc87b840ab0e9f192d237d8,
+    type: 3}
+  spawnVFX: {fileID: 2191219936891176266, guid: 354637219ac800d4eaeb9164e8c65af9,
     type: 3}
 --- !u!4 &731417790
 Transform:

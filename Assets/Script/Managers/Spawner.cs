@@ -20,6 +20,9 @@ public class Spawner : MonoBehaviour
 
     Vector3 hitPosition;
 
+    [Header("VFX")]
+    [SerializeField] GameObject spawnVFX;
+
     private void OnEnable()
     {
         GameplayEvents.CheckEnergy += CheckHaveEnergy;
@@ -69,13 +72,18 @@ public class Spawner : MonoBehaviour
         if (fraction == Fraction.Attacker)
         {
             var obj = Instantiate(attackerPrefab, new Vector3(pos.x, 0.55f, pos.z), Quaternion.identity);
+            var vfx = Instantiate(spawnVFX, new Vector3(pos.x, 0.08f, pos.z), Quaternion.identity);
+            vfx.GetComponent<ParticleSystem>().startColor = gameManager.player1Color;
             obj.GetComponent<Attacker>().activeColor = gameManager.player1Color;
         }
         else if (fraction == Fraction.Defender)
         {
             var obj = Instantiate(defenderPrefab, new Vector3(pos.x, 0.55f, pos.z), Quaternion.identity);
+            var vfx = Instantiate(spawnVFX, new Vector3(pos.x, 0.08f, pos.z), Quaternion.identity);
+            vfx.GetComponent<ParticleSystem>().startColor = gameManager.player2Color;
             obj.GetComponent<Defender>().activeColor = gameManager.player2Color;
         }
+
     }
 
     void SpawnBall()
