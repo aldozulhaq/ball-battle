@@ -3,6 +3,33 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
+public class Player
+{
+    private Fraction Fraction { get; set; }
+    private Color Color { get; set; }
+    
+    public Player(Fraction fraction, Color color)
+    {
+        this.Fraction = fraction;
+        this.Color = color;
+    }
+
+    public Fraction GetFraction()
+    {
+        return Fraction;
+    }
+
+    public void SetFraction(Fraction fraction)
+    {
+        this.Fraction = fraction;
+    }
+
+    public Color GetColor()
+    {
+        return Color;
+    }
+}
+
 public class GameManager : MonoBehaviour
 {
     private int matchCount;
@@ -26,6 +53,8 @@ public class GameManager : MonoBehaviour
     GameObject winPanel;
     [SerializeField] GameObject attackerWinPanel;
     [SerializeField] GameObject defenderWinPanel;
+
+    Player player1, player2;
 
     private void OnEnable()
     {
@@ -56,8 +85,10 @@ public class GameManager : MonoBehaviour
         mainCamera = Camera.main.gameObject;
         winPanel = attackerWinPanel.transform.parent.gameObject;
 
-        player1Fraction = Fraction.Attacker;
-        player2Fraction = Fraction.Defender;
+        /*player1Fraction = Fraction.Attacker;
+        player2Fraction = Fraction.Defender;*/
+        player1 = new Player(Fraction.Attacker, player1Color);
+        player2 = new Player(Fraction.Defender, player2Color);
 
         matchCount = 1; 
         ShowReadyPanel();
@@ -68,7 +99,8 @@ public class GameManager : MonoBehaviour
         readyPanel.SetActive(false);
         
         GameplayEvents.OnGameStart();
-        GameplayEvents.SetPlayerColor(player1Color, player2Color);
+        GameplayEvents.SetPlayerColor(GetPlayer_ByFraction(Fraction.Attacker).GetColor(), 
+                                        GetPlayer_ByFraction(Fraction.Defender).GetColor());
     }
 
     private void OnGameEnd(Fraction winningFraction)
@@ -98,6 +130,8 @@ public class GameManager : MonoBehaviour
 
     public void ContinueGame()
     {
+        GameplayEvents.OnContinue();
+
         ResetGame();
 
         SwitchSide();
@@ -109,18 +143,24 @@ public class GameManager : MonoBehaviour
     private void SwitchSide()
     {
 
-        if (player1Fraction == Fraction.Attacker)
+        if (player1.GetFraction() == Fraction.Attacker)
         {
             mainCamera.transform.eulerAngles = new Vector3(mainCamera.transform.eulerAngles.x, 180f, mainCamera.transform.eulerAngles.z);
-            player1Fraction = Fraction.Defender;
-            player2Fraction = Fraction.Attacker;
+            /*player1Fraction = Fraction.Defender;
+            player2Fraction = Fraction.Attacker;*/
+            player1.SetFraction(Fraction.Defender);
+            player2.SetFraction(Fraction.Attacker);
+
         }
         else
         {
             mainCamera.transform.eulerAngles = new Vector3(mainCamera.transform.eulerAngles.x, 0f, mainCamera.transform.eulerAngles.z);
-            player1Fraction = Fraction.Attacker;
-            player2Fraction = Fraction.Defender;
+            player1.SetFraction(Fraction.Attacker);
+            player2.SetFraction(Fraction.Defender);
         }
+
+        GameplayEvents.SetPlayerColor(GetPlayer_ByFraction(Fraction.Attacker).GetColor(),
+                                        GetPlayer_ByFraction(Fraction.Defender).GetColor());
     }
 
     public int GetMatchCount()
@@ -157,5 +197,21 @@ public class GameManager : MonoBehaviour
     {
         readyPanel.SetActive(true);
         matchText.text = "Match " + matchCount.ToString();
+    }
+
+    public Player GetPlayer_ByIndex(int playerIndex)
+    {
+        if (playerIndex == 1)
+            return player1;
+        else
+            return player2;
+    }
+
+    public Player GetPlayer_ByFraction(Fraction fraction)
+    {
+        if (player1.GetFraction() == fraction)
+            return player1;
+        else
+            return player2;
     }
 }

@@ -15,6 +15,7 @@ public static class GameplayEvents
     public static event Action OnTimerEndE;
     public static event Action OnGameStartE;
     public static event Action OnResetE;
+    public static event Action OnContinueE;
 
     public static event Action<Color, Color> SetPlayerColorE;
 
@@ -74,13 +75,18 @@ public static class GameplayEvents
         OnGameEndE?.Invoke(winningFraction);
     }
 
-    public static void SetPlayerColor(Color player1Color, Color player2Color)
+    public static void SetPlayerColor(Color attackerColor, Color defenderColor)
     {
-        SetPlayerColorE?.Invoke(player1Color, player2Color);
+        SetPlayerColorE?.Invoke(attackerColor, defenderColor);
     }
 
     public static void OnReset()
     {
         OnResetE?.Invoke();
+    }
+
+    public static void OnContinue()
+    {
+        OnContinueE?.Invoke();
     }
 }

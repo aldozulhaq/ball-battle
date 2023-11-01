@@ -40,7 +40,7 @@ public class Attacker : Soldier
     {
         goalGate = GameObject.FindGameObjectWithTag("Finish");
         soldierFraction = Fraction.Attacker;
-        ball = Ball.instance;
+        ball = FindObjectOfType<Ball>();
         SetCarrier();
 
         StartCoroutine(OnSpawning());
@@ -52,6 +52,9 @@ public class Attacker : Soldier
 
         while (currentState == SoldierState.Chasing)
         {
+            if (!ball)
+                ball = FindObjectOfType<Ball>();
+
             Vector3 ballPosition = new Vector3(ball.transform.position.x, transform.position.y, ball.transform.position.z);
             Move(ballPosition, normalSpeed);
 

@@ -70,15 +70,15 @@ public class Spawner : MonoBehaviour
         {
             var obj = Instantiate(attackerPrefab, new Vector3(pos.x, 0.55f, pos.z), Quaternion.identity);
             var vfx = Instantiate(VFXManager.instance.GetSpawnVFX(), new Vector3(pos.x, 0.08f, pos.z), Quaternion.identity);
-            vfx.GetComponent<ParticleSystem>().startColor = gameManager.player1Color;
-            obj.GetComponent<Attacker>().activeColor = gameManager.player1Color;
+            vfx.GetComponent<ParticleSystem>().startColor = gameManager.GetPlayer_ByFraction(Fraction.Attacker).GetColor();
+            obj.GetComponent<Attacker>().activeColor = gameManager.GetPlayer_ByFraction(Fraction.Attacker).GetColor();
         }
         else if (fraction == Fraction.Defender)
         {
             var obj = Instantiate(defenderPrefab, new Vector3(pos.x, 0.55f, pos.z), Quaternion.identity);
             var vfx = Instantiate(VFXManager.instance.GetSpawnVFX(), new Vector3(pos.x, 0.08f, pos.z), Quaternion.identity);
-            vfx.GetComponent<ParticleSystem>().startColor = gameManager.player2Color;
-            obj.GetComponent<Defender>().activeColor = gameManager.player2Color;
+            vfx.GetComponent<ParticleSystem>().startColor = gameManager.GetPlayer_ByFraction(Fraction.Defender).GetColor();
+            obj.GetComponent<Defender>().activeColor = gameManager.GetPlayer_ByFraction(Fraction.Defender).GetColor();
         }
 
     }

@@ -241,7 +241,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   currentState: 3
   inactiveColor: {r: 0.46274513, g: 0.46274513, b: 0.454902, a: 1}
-  activeColor: {r: 0.16862746, g: 0.21960786, b: 0.47058827, a: 1}
+  activeColor: {r: 0.46274513, g: 0.46274513, b: 0.454902, a: 1}
   spawnTime: 0.5
   reactivateTime: 2.5
   normalSpeed: 1.5

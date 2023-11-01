@@ -25,6 +25,7 @@ public class EnergyBar : MonoBehaviour
         GameplayEvents.OnGameEndE += StopFilling;
 
         GameplayEvents.SetPlayerColorE += SetPlayerColor;
+        GameplayEvents.OnContinueE += SwitchSide;
     }
     private void OnDisable()
     {
@@ -33,6 +34,7 @@ public class EnergyBar : MonoBehaviour
         GameplayEvents.OnGameEndE -= StopFilling;
 
         GameplayEvents.SetPlayerColorE -= SetPlayerColor;
+        GameplayEvents.OnContinueE -= SwitchSide;
     }
 
     private void Start()
@@ -74,6 +76,8 @@ public class EnergyBar : MonoBehaviour
         {
             GetComponent<Image>().color = defenderColor;
         }
+
+        GameplayEvents.SetPlayerColorE -= SetPlayerColor;
     }
 
     void OnSoldierSpawn(Fraction fraction, int canSpawn)
@@ -92,28 +96,22 @@ public class EnergyBar : MonoBehaviour
         }
     }
 
-    private void SwitchFraction()
-    {
-        Image energyImage = GetComponent<Image>();
-        if (fraction == Fraction.Attacker)
-        {
-            fraction = Fraction.Defender;
-            energyImage.color = defenderColor;
-        }
-        else
-        {
-            fraction = Fraction.Attacker;
-            energyImage.color = attackerColor;
-        }
-    }
-
     private void StartFilling()
     {
+        currentBar = 0f;
         isGameRunning = true;
     }
 
     private void StopFilling(Fraction fraction)
     {
         isGameRunning = false;
+    }
+
+    private void SwitchSide()
+    {
+        if (fraction == Fraction.Attacker)
+            fraction = Fraction.Defender;
+        else
+            fraction = Fraction.Attacker;
     }
 }

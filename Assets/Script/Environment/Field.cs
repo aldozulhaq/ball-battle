@@ -22,16 +22,16 @@ public class Field : MonoBehaviour
         GameplayEvents.SetPlayerColorE -= SetObjectsPlayerColor;
     }
 
-    private void SetObjectsPlayerColor(Color player1Color, Color player2color)
+    private void SetObjectsPlayerColor(Color attackerColor, Color defenderColor)
     {
         foreach (GameObject obj in attackerList)
         {
-            obj.GetComponent<MeshRenderer>().material.color = player1Color;
+            obj.GetComponent<MeshRenderer>().material.color = attackerColor;
         }
 
         foreach (GameObject obj in defenderList)
         {
-            obj.GetComponent<MeshRenderer>().material.color = player2color;
+            obj.GetComponent<MeshRenderer>().material.color = defenderColor;
         }
     }
 

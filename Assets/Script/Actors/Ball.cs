@@ -8,15 +8,6 @@ public class Ball : MonoBehaviour
     [SerializeField] float ballSpeed;
     private bool onPosession;
     private Attacker carrier;
-    #region Singleton
-
-    public static Ball instance;
-    private void Awake()
-    {
-        instance = this;   
-    }
-
-    #endregion
 
     private void OnEnable()
     {
