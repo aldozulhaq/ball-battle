@@ -40,10 +40,13 @@ public class Defender : Soldier
         GameplayEvents.OnHitCarrier();
     }
 
-    protected override IEnumerator OnSpawning()
+    protected override IEnumerator OnSpawning(System.Action _Callback = null)
     {
         StartCoroutine(base.OnSpawning());
-        StartCoroutine(StandingBy());
+
+        /*StartCoroutine(base.OnSpawning(() => {
+            StartCoroutine(OnInactive());
+        }));*/
 
         yield return null;
     }
@@ -92,8 +95,9 @@ public class Defender : Soldier
     }
    protected override IEnumerator OnInactive(System.Action _Callback = null)
    {
-        StartCoroutine(BackToSpawnPosition(() => 
-            StartCoroutine(base.OnInactive())
+
+        StartCoroutine(base.OnInactive(() => 
+            StartCoroutine(BackToSpawnPosition())
         ));
 
         yield return null;

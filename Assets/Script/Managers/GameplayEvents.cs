@@ -6,14 +6,14 @@ using UnityEngine;
 public static class GameplayEvents
 {
     public static event Action OnPlayerSpawnE;
-    public static event Action OnClickDefenderFieldE;
-    public static event Action OnClickAttackerFieldE;
     public static event Action OnAttackerStartCarryingE;
     public static event Action OnHitCarrierE;
     public static event Action OnPassBallE;
     public static event Action OnAttackerWinE;
     public static event Action OnDefenderWinE;
     public static event Action OnTimerEndE;
+    public static event Action OnGameStartE;
+    public static event Action OnGameEndE;
 
     public delegate void OnSoldierSpawn(Fraction fraction, int canSpawn); // 0 - can't spawn, 1 - can spawn, 2 - just checking
     public static event OnSoldierSpawn CheckEnergy;
@@ -56,5 +56,15 @@ public static class GameplayEvents
     public static void OnTimerEnd()
     {
         OnTimerEndE?.Invoke();
+    }
+
+    public static void OnGameStart()
+    {
+        OnGameStartE?.Invoke();
+    }
+
+    public static void OnGameEnd()
+    {
+        OnGameEndE?.Invoke();
     }
 }

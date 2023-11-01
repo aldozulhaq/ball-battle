@@ -61,7 +61,7 @@ Material:
     - _Bar_Width: 0.763
     - _Inner_Box_Height: 0.45
     - _Inner_Box_Width: 0.96
-    - _Progress: 0.17
+    - _Progress: 1
     - _QueueControl: 0
     - _QueueOffset: 0
     - _Segment_Width: 0.15

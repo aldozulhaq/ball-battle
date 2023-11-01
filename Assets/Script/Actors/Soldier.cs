@@ -51,10 +51,15 @@ public class Soldier : MonoBehaviour
         transform.LookAt(target);
     }
 
-    protected virtual IEnumerator OnSpawning()
+    protected virtual IEnumerator OnSpawning(System.Action _Callback = null)
     {
         // TODO Spawn animation here
+        Debug.Log("Soldier spawn animation in progress for 0.5 sec");
+
         yield return new WaitForSeconds(spawnTime);
+        StartCoroutine(OnInactive());
+
+        _Callback?.Invoke();
 
     }
 
@@ -63,6 +68,8 @@ public class Soldier : MonoBehaviour
         currentState = SoldierState.Inactive;
         // TODO: Change color 
         ChangeColor(inactiveColor);
+        _Callback?.Invoke();
+
         yield return new WaitForSeconds(reactivateTime);
 
         Reactivate();

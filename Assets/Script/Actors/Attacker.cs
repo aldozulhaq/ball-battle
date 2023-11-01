@@ -35,10 +35,7 @@ public class Attacker : Soldier
         ball = Ball.instance;
         SetCarrier();
 
-        if (ballCarrier)
-            StartCoroutine(MoveToFenceCorroutine());
-        else
-            StartCoroutine(ChaseBall());
+        StartCoroutine(OnSpawning());
     }
 
     private IEnumerator ChaseBall()
@@ -195,7 +192,15 @@ public class Attacker : Soldier
     {
         base.Reactivate();
 
-        currentState = SoldierState.Standby;
-        StartCoroutine(MoveToFenceCorroutine());
+        if (ballCarrier)
+        {
+            currentState = SoldierState.Standby;
+            StartCoroutine(MoveToFenceCorroutine());
+        }
+        else
+            StartCoroutine(ChaseBall());
+
+        /*currentState = SoldierState.Standby;
+        StartCoroutine(MoveToFenceCorroutine());*/
     }
 }

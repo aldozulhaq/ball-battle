@@ -28,11 +28,6 @@ public class Ball : MonoBehaviour
         GameplayEvents.OnHitCarrierE -= OnAttackerGotHit;
     }*/
 
-    private void SpawnInRandomLocation()
-    {
-
-    }
-
     public IEnumerator MoveBall(Transform attackerFeet)
     {
         Debug.Log("Move Ball");

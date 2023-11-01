@@ -12,14 +12,29 @@ public enum Fraction
 
 public class Spawner : MonoBehaviour
 {
+    [SerializeField] GameManager gameManager;
+
     [SerializeField] GameObject attackerPrefab;
     [SerializeField] GameObject defenderPrefab;
+    [SerializeField] GameObject ballPrefab;
 
     Vector3 hitPosition;
 
-    private void Start()
+    private void OnEnable()
     {
         GameplayEvents.CheckEnergy += CheckHaveEnergy;
+        GameplayEvents.OnGameStartE += SpawnBall;
+    }
+
+    private void OnDisable()
+    {
+        GameplayEvents.CheckEnergy -= CheckHaveEnergy;
+        GameplayEvents.OnGameStartE -= SpawnBall;
+    }
+
+    private void Awake()
+    {
+        gameManager = GetComponent<GameManager>();
     }
 
     void Update()
@@ -51,7 +66,6 @@ public class Spawner : MonoBehaviour
 
     void HandleSpawn(Fraction fraction, Vector3 pos)
     {
-
         if (fraction == Fraction.Attacker)
         {
             Instantiate(attackerPrefab, new Vector3(pos.x, 0.55f, pos.z), Quaternion.identity);
@@ -60,5 +74,11 @@ public class Spawner : MonoBehaviour
         {
             Instantiate(defenderPrefab, new Vector3(pos.x, 0.55f, pos.z), Quaternion.identity);
         }
+    }
+
+    void SpawnBall()
+    {
+        Vector3 randomizedPos = gameManager.RandomizeFieldSpot();
+        Instantiate(ballPrefab, randomizedPos, Quaternion.identity);
     }
 }

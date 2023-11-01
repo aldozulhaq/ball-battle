@@ -43,5 +43,6 @@ public class TimeManager : MonoBehaviour
         GetComponent<Image>().material.SetFloat("_Progress", 0.0f);
 
         GameplayEvents.OnTimerEnd();
+        Debug.Log("Defender Win!!");
     }
 }

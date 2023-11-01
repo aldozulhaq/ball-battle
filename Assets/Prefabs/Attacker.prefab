@@ -132,6 +132,11 @@ PrefabInstance:
       propertyPath: m_Name
       value: Attacker
       objectReference: {fileID: 0}
+    - target: {fileID: 3830534318098108880, guid: 841687251266de14793ac32455bf58ad,
+        type: 3}
+      propertyPath: m_TagString
+      value: Player
+      objectReference: {fileID: 0}
     - target: {fileID: 8713999355065206776, guid: 841687251266de14793ac32455bf58ad,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -234,7 +239,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 05346e9026ac2fb4997fc486fa6d9b12, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  currentState: 0
+  currentState: 3
   inactiveColor: {r: 0.46274513, g: 0.46274513, b: 0.454902, a: 1}
   activeColor: {r: 0.16862746, g: 0.21960786, b: 0.47058827, a: 1}
   spawnTime: 0.5
