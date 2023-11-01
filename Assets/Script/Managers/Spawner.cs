@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using UnityEditor;
 using UnityEngine;
 using static GameplayEvents;
 
@@ -72,6 +73,7 @@ public class Spawner : MonoBehaviour
             var vfx = Instantiate(VFXManager.instance.GetSpawnVFX(), new Vector3(pos.x, 0.08f, pos.z), Quaternion.identity);
             vfx.GetComponent<ParticleSystem>().startColor = gameManager.GetPlayer_ByFraction(Fraction.Attacker).GetColor();
             obj.GetComponent<Attacker>().activeColor = gameManager.GetPlayer_ByFraction(Fraction.Attacker).GetColor();
+            obj.GetComponent<Renderer>().sharedMaterial.color = gameManager.GetPlayer_ByFraction(Fraction.Attacker).GetColor();
         }
         else if (fraction == Fraction.Defender)
         {
@@ -79,6 +81,7 @@ public class Spawner : MonoBehaviour
             var vfx = Instantiate(VFXManager.instance.GetSpawnVFX(), new Vector3(pos.x, 0.08f, pos.z), Quaternion.identity);
             vfx.GetComponent<ParticleSystem>().startColor = gameManager.GetPlayer_ByFraction(Fraction.Defender).GetColor();
             obj.GetComponent<Defender>().activeColor = gameManager.GetPlayer_ByFraction(Fraction.Defender).GetColor();
+            obj.GetComponent<Renderer>().sharedMaterial.color = gameManager.GetPlayer_ByFraction(Fraction.Defender).GetColor();
         }
 
     }

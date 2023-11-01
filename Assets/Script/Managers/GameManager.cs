@@ -181,7 +181,7 @@ public class GameManager : MonoBehaviour
 
         float widthMin = 0 - fieldWidth / 2;
         float widthMax = fieldWidth / 2;
-        float heightMin = 0 - fieldhHeight / 2;
+        float heightMin = 3.7f - fieldhHeight / 2;
         float heightMax = fieldhHeight / 2;
 
         float randomizeWidth = Random.Range(widthMin, widthMax);
