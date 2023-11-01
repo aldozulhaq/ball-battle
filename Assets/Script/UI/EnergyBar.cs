@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.Runtime.InteropServices.WindowsRuntime;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -54,9 +55,10 @@ public class EnergyBar : MonoBehaviour
             }
         }
 
-        // Update the material parameter (_progress) to display the bar.
         float progress = Mathf.Lerp(currentBar / (float)maxBars, (currentBar + 1) / (float)maxBars, timeSinceLastRefill / refillRate);
+        float trueProgressBar = currentBar / (float)maxBars;
         GetComponent<Image>().material.SetFloat("_Progress", progress);
+        GetComponent<Image>().material.SetFloat("_True_Progress_Bar", trueProgressBar);
     }
 
     void SetPlayerColor(Color player1Color, Color player2Color)
