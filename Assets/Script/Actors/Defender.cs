@@ -8,6 +8,7 @@ public class Defender : Soldier
     [SerializeField] private float defenseRadius;
 
     private Vector3 startPos;
+    private GameManager gameManager;
 
     // Speeds
     [SerializeField] float returnSpeed;
@@ -19,14 +20,14 @@ public class Defender : Soldier
     {
         GameplayEvents.OnAttackerStartCarryingE += OnCarrierChange;
 
-        GameplayEvents.OnGameEndE += OnEndGame;
+        GameplayEvents.OnMatchEndE += OnEndGame;
         GameplayEvents.OnResetE += OnReset;
     }
     private void OnDisable()
     {
         GameplayEvents.OnAttackerStartCarryingE -= OnCarrierChange;
 
-        GameplayEvents.OnGameEndE -= OnEndGame;
+        GameplayEvents.OnMatchEndE -= OnEndGame;
         GameplayEvents.OnResetE -= OnReset;
     }
 

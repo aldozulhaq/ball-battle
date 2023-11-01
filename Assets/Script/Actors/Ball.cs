@@ -49,7 +49,7 @@ public class Ball : MonoBehaviour
     public void OnGoal()
     {
         Debug.Log("Goal!!!!");
-        GameplayEvents.OnGameEnd(Fraction.Attacker);
+        GameplayEvents.OnMatchEnd(Fraction.Attacker);
     }
 
     private void OnReset()

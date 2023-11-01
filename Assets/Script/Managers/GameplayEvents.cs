@@ -22,8 +22,8 @@ public static class GameplayEvents
     public delegate void OnSoldierSpawn(Fraction fraction, int canSpawn); // 0 - can't spawn, 1 - can spawn, 2 - just checking
     public static event OnSoldierSpawn CheckEnergy;
 
-    public delegate void OnGameEndDelegate(Fraction winningFraction);
-    public static event OnGameEndDelegate OnGameEndE;
+    public delegate void OnMatchEndDelegate(Fraction winningFraction);
+    public static event OnMatchEndDelegate OnMatchEndE;
     
     public static void OnPlayerSpawn()
     {
@@ -65,14 +65,14 @@ public static class GameplayEvents
         OnTimerEndE?.Invoke();
     }
 
-    public static void OnGameStart()
+    public static void OnMatchStart()
     {
         OnGameStartE?.Invoke();
     }
 
-    public static void OnGameEnd(Fraction winningFraction)
+    public static void OnMatchEnd(Fraction winningFraction)
     {
-        OnGameEndE?.Invoke(winningFraction);
+        OnMatchEndE?.Invoke(winningFraction);
     }
 
     public static void SetPlayerColor(Color attackerColor, Color defenderColor)

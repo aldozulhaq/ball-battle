@@ -14,12 +14,12 @@ public class TimeManager : MonoBehaviour
     private void OnEnable()
     {
         GameplayEvents.OnGameStartE += StartCountdown;
-        GameplayEvents.OnGameEndE += StopCountdown;
+        GameplayEvents.OnMatchEndE += StopCountdown;
     }
     private void OnDisable()
     {
         GameplayEvents.OnGameStartE -= StartCountdown;
-        GameplayEvents.OnGameEndE -= StopCountdown;
+        GameplayEvents.OnMatchEndE -= StopCountdown;
     }
 
     void StartCountdown()
@@ -49,7 +49,7 @@ public class TimeManager : MonoBehaviour
         GetComponent<Image>().material.SetFloat("_Progress", 0.0f);
 
         GameplayEvents.OnTimerEnd();
-        GameplayEvents.OnGameEnd(Fraction.Defender);
+        GameplayEvents.OnMatchEnd(Fraction.Defender);
         Debug.Log("Time's up");
     }
 

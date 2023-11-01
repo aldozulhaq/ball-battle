@@ -19,7 +19,7 @@ public class Attacker : Soldier
         GameplayEvents.OnAttackerStartCarryingE += SetCarrier;
         GameplayEvents.OnHitCarrierE += RemoveCarrier;
 
-        GameplayEvents.OnGameEndE += OnEndGame;
+        GameplayEvents.OnMatchEndE += OnEndGame;
         GameplayEvents.OnResetE += OnReset;
 
     }
@@ -31,7 +31,7 @@ public class Attacker : Soldier
 
         GameplayEvents.OnHitCarrierE -= OnCaught;   // OnCaught only subscribe if it's carrying/dribbling ball
 
-        GameplayEvents.OnGameEndE -= OnEndGame;
+        GameplayEvents.OnMatchEndE -= OnEndGame;
         GameplayEvents.OnResetE -= OnReset;
 
     }
@@ -141,7 +141,7 @@ public class Attacker : Soldier
 
         if(NearestAlly() == null)
         {
-            GameplayEvents.OnGameEnd(Fraction.Defender);
+            GameplayEvents.OnMatchEnd(Fraction.Defender);
             Debug.Log("Defender Win!!");
             return;
         }

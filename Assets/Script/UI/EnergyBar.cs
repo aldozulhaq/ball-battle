@@ -22,7 +22,7 @@ public class EnergyBar : MonoBehaviour
     {
         GameplayEvents.CheckEnergy += OnSoldierSpawn;
         GameplayEvents.OnGameStartE += StartFilling;
-        GameplayEvents.OnGameEndE += StopFilling;
+        GameplayEvents.OnMatchEndE += StopFilling;
 
         GameplayEvents.SetPlayerColorE += SetPlayerColor;
         GameplayEvents.OnContinueE += SwitchSide;
@@ -31,7 +31,7 @@ public class EnergyBar : MonoBehaviour
     {
         GameplayEvents.CheckEnergy -= OnSoldierSpawn;
         GameplayEvents.OnGameStartE -= StartFilling;
-        GameplayEvents.OnGameEndE -= StopFilling;
+        GameplayEvents.OnMatchEndE -= StopFilling;
 
         GameplayEvents.SetPlayerColorE -= SetPlayerColor;
         GameplayEvents.OnContinueE -= SwitchSide;

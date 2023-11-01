@@ -7,11 +7,15 @@ public class Player
 {
     private Fraction Fraction { get; set; }
     private Color Color { get; set; }
+    private int Score { get; set; }
+    private string Name { get; set; }
     
-    public Player(Fraction fraction, Color color)
+    public Player(Fraction fraction, Color color, string name)
     {
         this.Fraction = fraction;
         this.Color = color;
+        this.Score = 0;
+        this.Name = name;
     }
 
     public Fraction GetFraction()
@@ -28,15 +32,27 @@ public class Player
     {
         return Color;
     }
+
+    public void AddScore()
+    {
+        this.Score++;
+    }
+
+    public int GetScore()
+    {
+        return this.Score;
+    }
+
+    public string GetName()
+    {
+        return this.Name;
+    }
 }
 
 public class GameManager : MonoBehaviour
 {
     private int matchCount;
     private int playerReadyCount;
-    
-    private Fraction player1Fraction;
-    private Fraction player2Fraction;
 
     [Header("Fraction Color")]
     [SerializeField] public Color player1Color;
@@ -49,6 +65,8 @@ public class GameManager : MonoBehaviour
     [SerializeField] Button readyButton;
     [SerializeField] GameObject readyPanel;
     [SerializeField] Text matchText;
+    [SerializeField] ScoreBoard player1Board;
+    [SerializeField] ScoreBoard player2Board;
 
     GameObject winPanel;
     [SerializeField] GameObject attackerWinPanel;
@@ -58,17 +76,17 @@ public class GameManager : MonoBehaviour
 
     private void OnEnable()
     {
-        GameplayEvents.OnGameEndE += OnGameEnd;
+        GameplayEvents.OnMatchEndE += OnMatchEnd;
     }
 
     private void OnDisable()
     {
-        GameplayEvents.OnGameEndE -= OnGameEnd;
+        GameplayEvents.OnMatchEndE -= OnMatchEnd;
     }
 
     private void Awake()
     {
-        readyButton.onClick.AddListener(OnGameStart);
+        readyButton.onClick.AddListener(OnMatchStart);
 
 
         foreach (Field f in FindObjectsOfType<Field>())
@@ -87,23 +105,24 @@ public class GameManager : MonoBehaviour
 
         /*player1Fraction = Fraction.Attacker;
         player2Fraction = Fraction.Defender;*/
-        player1 = new Player(Fraction.Attacker, player1Color);
-        player2 = new Player(Fraction.Defender, player2Color);
+        player1 = new Player(Fraction.Attacker, player1Color, "Player 1");
+        player2 = new Player(Fraction.Defender, player2Color, "Player 2");
 
         matchCount = 1; 
         ShowReadyPanel();
     }
 
-    public void OnGameStart()
+    public void OnMatchStart()
     {
+        Debug.Log("sTART");
         readyPanel.SetActive(false);
         
-        GameplayEvents.OnGameStart();
+        GameplayEvents.OnMatchStart();
         GameplayEvents.SetPlayerColor(GetPlayer_ByFraction(Fraction.Attacker).GetColor(), 
                                         GetPlayer_ByFraction(Fraction.Defender).GetColor());
     }
 
-    private void OnGameEnd(Fraction winningFraction)
+    private void OnMatchEnd(Fraction winningFraction)
     {
         winPanel.SetActive(true);
         defenderWinPanel.SetActive(false);
@@ -196,6 +215,8 @@ public class GameManager : MonoBehaviour
     private void ShowReadyPanel()
     {
         readyPanel.SetActive(true);
+        player1Board.SetScoreBoard(player1.GetScore(), player1.GetName());
+        player2Board.SetScoreBoard(player2.GetScore(), player2.GetName());
         matchText.text = "Match " + matchCount.ToString();
     }
 
