@@ -38,6 +38,15 @@ public class GameManager : MonoBehaviour
     private void Awake()
     {
         readyButton.onClick.AddListener(OnGameStart);
+
+
+        foreach (Field f in FindObjectsOfType<Field>())
+        {
+            if (f.GetFieldFraction() == Fraction.Attacker)
+            {
+                field = f.gameObject;
+            }
+        }
     }
 
     private void Start()
@@ -55,14 +64,6 @@ public class GameManager : MonoBehaviour
     {
         readyPanel.SetActive(false);
         
-        foreach(Field f in FindObjectsOfType<Field>())
-        {
-            if(f.GetFieldFraction() == Fraction.Attacker)
-            {
-                field = f.gameObject;
-            }
-        }
-
         GameplayEvents.OnGameStart();
         GameplayEvents.SetPlayerColor(player1Color, player2Color);
     }
