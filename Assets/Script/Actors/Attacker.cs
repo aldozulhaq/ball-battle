@@ -128,6 +128,7 @@ public class Attacker : Soldier
     private void OnTouchFence()
     {
         // Destroy
+        Instantiate(VFXManager.instance.GetExplosionVFX(), transform.position, Quaternion.identity);
         Destroy(this.gameObject);
     }
 

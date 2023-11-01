@@ -1109,7 +1109,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   timerText: {fileID: 638565882}
-  maxTimer: 10
+  maxTimer: 140
 --- !u!1 &607917125
 GameObject:
   m_ObjectHideFlags: 0
@@ -1637,6 +1637,7 @@ GameObject:
   - component: {fileID: 731417790}
   - component: {fileID: 731417789}
   - component: {fileID: 731417791}
+  - component: {fileID: 731417792}
   m_Layer: 0
   m_Name: GameManager
   m_TagString: Untagged
@@ -1662,8 +1663,6 @@ MonoBehaviour:
   defenderPrefab: {fileID: 5798911966524060577, guid: f2a9ad1f01dad734f81b3dd774f0cef9,
     type: 3}
   ballPrefab: {fileID: 485512739152547114, guid: a1a8d209adc87b840ab0e9f192d237d8,
-    type: 3}
-  spawnVFX: {fileID: 2191219936891176266, guid: 354637219ac800d4eaeb9164e8c65af9,
     type: 3}
 --- !u!4 &731417790
 Transform:
@@ -1700,6 +1699,25 @@ MonoBehaviour:
   matchText: {fileID: 922546712}
   attackerWinPanel: {fileID: 607917125}
   defenderWinPanel: {fileID: 874236476}
+--- !u!114 &731417792
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 731417788}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 816c55670a509cc49857b6ae21f0b94c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  spawnVFX: {fileID: 2191219936891176266, guid: 354637219ac800d4eaeb9164e8c65af9,
+    type: 3}
+  explosionVFX: {fileID: 6106810495771132336, guid: 7cdcd94e2f2ee4042a0d91fdf8bb9b89,
+    type: 3}
+  sparksVFX: {fileID: 2604170150596824672, guid: 7fa801f4b0d7aaf4aba346ce84caa6f7,
+    type: 3}
+  radiusVFX: {fileID: 0}
 --- !u!1 &798673024
 GameObject:
   m_ObjectHideFlags: 0
