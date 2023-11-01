@@ -60,6 +60,7 @@ public class GameManager : MonoBehaviour
 
     [SerializeField] GameObject field;
     GameObject mainCamera;
+    private bool isGameRunning;
 
     [Header("UI")]
     [SerializeField] Button readyButton;
@@ -114,7 +115,7 @@ public class GameManager : MonoBehaviour
 
     public void OnMatchStart()
     {
-        Debug.Log("sTART");
+        isGameRunning = true;
         readyPanel.SetActive(false);
         
         GameplayEvents.OnMatchStart();
@@ -124,6 +125,7 @@ public class GameManager : MonoBehaviour
 
     private void OnMatchEnd(Fraction winningFraction)
     {
+        isGameRunning = false;
         winPanel.SetActive(true);
         defenderWinPanel.SetActive(false);
         attackerWinPanel.SetActive(false);
@@ -234,5 +236,10 @@ public class GameManager : MonoBehaviour
             return player1;
         else
             return player2;
+    }
+
+    public bool GetMatchStatus()
+    {
+        return isGameRunning;
     }
 }

@@ -146,6 +146,7 @@ public class Attacker : Soldier
             return;
         }
         StartCoroutine(ball.PassBall(NearestAlly().transform));
+        StartCoroutine(NearestAlly().ChaseBall());
     }
 
     private Attacker NearestAlly()
@@ -175,6 +176,9 @@ public class Attacker : Soldier
             if (nearest > potentialNearest)
                 nearestAlly = ally;
         }
+
+        if (nearestAlly.currentState == SoldierState.Inactive || nearestAlly == this)
+            nearestAlly = null;
 
         // Return the nearest
         return nearestAlly;

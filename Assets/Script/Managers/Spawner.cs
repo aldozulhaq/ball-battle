@@ -42,6 +42,9 @@ public class Spawner : MonoBehaviour
     {
         if (Input.GetMouseButtonDown(0))
         {
+            if (!gameManager.GetMatchStatus())
+                return;
+
             RaycastHit hit;
             Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
 
